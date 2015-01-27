@@ -40,14 +40,14 @@ double relaxation(int dimX, int dimY, double tolerance){
 		
 	double** potential;
 	double** potentialNEW;
-	potential = new double*[dimY];
-	potentialNEW = new double*[dimY];
+	potential = new double*[dimX];
+	potentialNEW = new double*[dimX];
 	
 	// Each pointer will point to an array of size Y
 	// hence, this will create an array of arrays OR in other words a 2D array
 	for(int i=0 ; i<dimY ; i++){
-		potential[i] = new double[dimX];	
-		potentialNEW[i] = new double[dimX];	
+		potential[i] = new double[dimY];	
+		potentialNEW[i] = new double[dimY];	
 	}
 	
 	
@@ -73,23 +73,28 @@ double relaxation(int dimX, int dimY, double tolerance){
 		}
 	}
 	
+
+	
+	
 	// Middle coordinates of the circle
 	xMiddle = round(dimX/2);
-	yMiddle = round(dimX/2);
+	yMiddle = round(dimY/2);
 	
 	// Radius
 
-	int R = 5;
+	int R = 20;
 	
 	// Circle in the middle
+	/*
 	for (int X = (xMiddle - R) ; X<(xMiddle + R); X++){
 		for (int Y = (yMiddle - R) ; Y<(yMiddle + R) ; Y++){
 			if ( pow(X,2) + pow(Y,2) <= pow(R,2) ) {	
 				potential[X][Y]=0;
+				potentialNEW[X][Y]=0;
 			}
 		}
 	}
-
+	*/
 	
 	
 	
@@ -99,7 +104,8 @@ double relaxation(int dimX, int dimY, double tolerance){
 	
 	// The algorithm converges the fastest when 
 	// orp = 2/(1 + PI/L)
-	orp = 2/(1 + PI/dimX);
+	//orp = 2/(1 + PI/dimX);
+	orp=1.5;
 	
 	
 	//**************************************//	
@@ -109,8 +115,11 @@ double relaxation(int dimX, int dimY, double tolerance){
 	// Initialize the estimation of the solution one iteration ahead.
 	for (int X = 1 ; X<dimX-1 ; X++){
 		for (int Y = 1 ; Y<dimY-1 ; Y++){
-						
-			potentialNEW[X][Y] = (potential[X+1][Y] + potential[X-1][Y] + potential[X][Y+1] + potential[X][Y-1])/4;
+			if ( pow(X-xMiddle,2) + pow(Y-yMiddle,2) <= pow(R,2) ) {
+				potentialNEW[X][Y] = 0;
+			} else {		
+				potentialNEW[X][Y] = (potential[X+1][Y] + potential[X-1][Y] + potential[X][Y+1] + potential[X][Y-1])/4;
+			}
 		}
 	}
 	
@@ -121,12 +130,16 @@ double relaxation(int dimX, int dimY, double tolerance){
 	// While the error is bigger than the tolerated one
 	// carry on with approximating the solution further
 	// until it is reached.
-	error = 100;
+	error = 500;
 	while (error > tolerance){
 	
 		for (int X = 1 ; X<dimX-1 ; X++){
 			for (int Y = 1 ; Y<dimY-1 ; Y++){
-				potentialNEW[X][Y] = (1-orp)*potential[X][Y] + (orp/4)*(potential[X+1][Y] + potentialNEW[X-1][Y] + potential[X][Y+1] + potentialNEW[X][Y-1]);
+				if ( pow(X-xMiddle,2) + pow(Y-yMiddle,2) <= pow(R,2) ) {
+					potentialNEW[X][Y] = 0;
+				} else {
+					potentialNEW[X][Y] = (1-orp)*potential[X][Y] + (orp/4)*(potential[X+1][Y] + potentialNEW[X-1][Y] + potential[X][Y+1] + potentialNEW[X][Y-1]);
+				}
 			}
 		}	
 		
@@ -137,18 +150,6 @@ double relaxation(int dimX, int dimY, double tolerance){
 				potential[X][Y] = potentialNEW[X][Y];	
 			}
 		}
-		
-		// Circle in the middle
-		// Reinitialize it
-		for (int X = (xMiddle - R) ; X<(xMiddle + R); X++){
-			for (int Y = (yMiddle - R) ; Y<(yMiddle + R) ; Y++){	
-				if ( pow(X,2) + pow(Y,2) <= pow(R,2) ) {	
-					potential[X][Y]=0;
-				}
-			}
-		}
-		
-			
 
 		error -= 1;
 		
@@ -159,9 +160,8 @@ double relaxation(int dimX, int dimY, double tolerance){
 	data.open ("code");
 
 	for (int X = 0 ; X<dimX ; X++){
-		data << endl;
 		for (int Y = 0 ; Y<dimY ; Y++){
-			data << potentialNEW[X][Y] << " " ;
+			data << X << " " << Y << " " << potentialNEW[X][Y] << endl ;
 		}
 	}
 	
@@ -177,6 +177,6 @@ double relaxation(int dimX, int dimY, double tolerance){
 int main(){
 
 
-	relaxation(20,20,1);
+	relaxation(50,200,1);
 	return 0;
 }
