@@ -26,7 +26,10 @@ double relaxation(int dimX, int dimY, double tolerance){
 	double error;
 	// File for the data
 	ofstream data;
-	
+	ofstream field;
+	// Radius
+	int R = 20;
+	// Center co-ordinates
 	double xMiddle,yMiddle;
 	
 
@@ -40,12 +43,21 @@ double relaxation(int dimX, int dimY, double tolerance){
 		
 	double** potential;
 	double** potentialNEW;
+	double** electricF;
+	double** electricFX;
+	double** electricFY;
+	electricF = new double*[dimX];
+	electricFX = new double*[dimX];
+	electricFY = new double*[dimX];		
 	potential = new double*[dimX];
 	potentialNEW = new double*[dimX];
 	
 	// Each pointer will point to an array of size Y
 	// hence, this will create an array of arrays OR in other words a 2D array
 	for(int i=0 ; i<dimY ; i++){
+		electricF[i] = new double[dimY];
+		electricFX[i] = new double[dimY];
+		electricFY[i] = new double[dimY];
 		potential[i] = new double[dimY];	
 		potentialNEW[i] = new double[dimY];	
 	}
@@ -79,23 +91,6 @@ double relaxation(int dimX, int dimY, double tolerance){
 	// Middle coordinates of the circle
 	xMiddle = round(dimX/2);
 	yMiddle = round(dimY/2);
-	
-	// Radius
-
-	int R = 20;
-	
-	// Circle in the middle
-	/*
-	for (int X = (xMiddle - R) ; X<(xMiddle + R); X++){
-		for (int Y = (yMiddle - R) ; Y<(yMiddle + R) ; Y++){
-			if ( pow(X,2) + pow(Y,2) <= pow(R,2) ) {	
-				potential[X][Y]=0;
-				potentialNEW[X][Y]=0;
-			}
-		}
-	}
-	*/
-	
 	
 	
 	//**************************************//	
@@ -152,9 +147,6 @@ double relaxation(int dimX, int dimY, double tolerance){
 		}
 
 		error -= 1;
-		
-		
-		
 	}
 
 	data.open ("code");
@@ -165,8 +157,33 @@ double relaxation(int dimX, int dimY, double tolerance){
 		}
 	}
 	
-
+	data.close();
 	
+	//**************************************//	
+	// 		Electric field		//	
+	//**************************************//
+	
+	for (int X = 0 ; X<dimX-1 ; X++){
+		for (int Y = 0 ; Y<dimY-1 ; Y++){
+			// Components of the electric field
+			electricFX[X][Y] = potentialNEW[X+1][Y] - potentialNEW[X][Y];
+			electricFY[X][Y] = potentialNEW[X][Y+1] - potentialNEW[X][Y];			
+			// Magnitude of E	
+			electricF[X][Y] = sqrt(pow(electricFX[X][Y],2) + pow(electricFY[X][Y],2));
+		}
+	}
+	
+	field.open("electric");
+	
+	field << "X " << "Y " << "dEx " << "dEy " << "|E|" << endl;
+	
+	for ( int X=0 ; X<dimX ; X++){
+		for ( int Y=0 ; Y<dimY ; Y++){	
+			data << X << " " << Y << " " << electricFX[X][Y] << " " << electricFY[X][Y] << " " << electricF[X][Y] << endl ;
+		}
+	}
+	
+		
 	return 0;
 }
 
