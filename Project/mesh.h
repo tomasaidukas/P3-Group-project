@@ -31,6 +31,11 @@ class Mesh{
  public:
   Mesh(int, int);     //constructor
   ~Mesh();     //destructor
+
+
+  //friend functions to input and output the mesh
+  friend std::ostream& operator<<(std::ostream&, Mesh&);//output
+  friend std::istream& operator>>(std::istream&, Mesh&);//input
 };
 
 

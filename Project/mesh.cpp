@@ -17,6 +17,9 @@ Mesh::Mesh(int n_dimX, int n_dimY): mn_dimX(n_dimX),
   }
 }
 
+
+
+
 //DESTRUCTOR
 //Deallocates memory from the 2D array of meshpoints
 Mesh::~Mesh()
@@ -28,4 +31,34 @@ Mesh::~Mesh()
 
   //deallocate x array
   delete[] matrix;
+}
+
+
+
+//OUTPUT MESH
+//friend function to overload << operator
+//e.g. cout << mymesh
+//loops over valeus of mesh and outputs them
+std::ostream& operator<<(std::ostream &os_out, Mesh &thismesh)
+{
+  for (int i=0; i<thismesh.mn_dimX; i++){
+    for (int j=0; j<thismesh.mn_dimY; j++){
+      os_out << thismesh.matrix[i][j].V << " ";
+    }
+    os_out << std::endl;
+  }
+}
+
+
+//INPUT MESH
+//friend function to overload >> operator
+//e.g. cin >> mymesh
+//loops over values of mesh to input them
+std::istream& operator>>(std::istream &os_in, Mesh &thismesh)
+{
+  for (int i=0; i<thismesh.mn_dimX; i++){
+    for (int j=0; j<thismesh.mn_dimY; j++){
+      os_in >>  thismesh.matrix[i][j].V;
+    }
+  }
 }
