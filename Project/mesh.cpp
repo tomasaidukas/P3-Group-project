@@ -34,6 +34,21 @@ Mesh::~Mesh()
 }
 
 
+//MUTATOR FUNCTIONS
+void Mesh::setV(double d_V, int i, int j)
+{
+  matrix[i][j].V = d_V;
+}
+
+void Mesh::setisBoundary(bool b_cond, int i, int j)
+{
+  matrix[i][j].isBoundary = b_cond;
+}
+
+
+
+
+
 
 //OUTPUT MESH
 //friend function to overload << operator

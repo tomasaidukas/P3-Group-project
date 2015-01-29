@@ -32,6 +32,11 @@ class Mesh{
   Mesh(int, int);     //constructor
   ~Mesh();     //destructor
 
+  //mutator functions
+  void setV(double, int, int);
+  void setisBoundary(bool, int, int);
+
+
 
   //friend functions to input and output the mesh
   friend std::ostream& operator<<(std::ostream&, Mesh&);//output
