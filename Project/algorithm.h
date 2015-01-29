@@ -12,8 +12,8 @@
 #define ALGORITHM_H
 
 #include<iostream>
-#include"S_mesh.h"
-#include"S_shape.h"
+#include"mesh.h"
+#include"shape.h"
 
 class Algorithm{
  private:
