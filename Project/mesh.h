@@ -36,6 +36,10 @@ class Mesh{
   void setV(double, int, int);
   void setisBoundary(bool, int, int);
 
+  //accesssor functions
+  double getV(int, int);
+  bool getisBoundary(int, int);
+
 
 
   //friend functions to input and output the mesh
