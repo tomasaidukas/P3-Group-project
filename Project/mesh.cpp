@@ -39,7 +39,7 @@ Mesh::~Mesh()
 //friend function to overload << operator
 //e.g. cout << mymesh
 //loops over valeus of mesh and outputs them
-std::ostream& operator<<(std::ostream &os_out, Mesh &thismesh)
+std::ostream& opeg++rator<<(std::ostream &os_out, Mesh &thismesh)
 {
   for (int i=0; i<thismesh.mn_dimX; i++){
     for (int j=0; j<thismesh.mn_dimY; j++){
@@ -54,7 +54,7 @@ std::ostream& operator<<(std::ostream &os_out, Mesh &thismesh)
 //friend function to overload >> operator
 //e.g. cin >> mymesh
 //loops over values of mesh to input them
-std::istream& operator>>(std::istream &os_in, Mesh &thismesh)
+std::istream& operator(std::istream &os_in, Mesh &thismesh)
 {
 std::cout << "Enter values for a " << thismesh.mn_dimX << "x" << thismesh.mn_dimY << " matrix." << std::endl;
   for (int i=0; i<thismesh.mn_dimX; i++){

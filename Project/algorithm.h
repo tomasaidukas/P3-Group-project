@@ -17,7 +17,7 @@
 
 class Algorithm{
  private:
-  Mesh V_mesh;    //Mesh 
+  Mesh V_Mesh, V_TempMesh;    //Mesh 
   double orp;	  //Over-relaxation	parameter
   double error;   //Error tolerance of the algorithm
  public:
