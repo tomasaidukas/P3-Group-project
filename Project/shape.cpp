@@ -1,7 +1,7 @@
 //Contains function definitions for the Shape class
 
 
-#include "Shape.h"
+#include "shape.h"
 
 //CONSTRUCTOR
 Shape::Shape(){}
