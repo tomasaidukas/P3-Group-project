@@ -59,7 +59,7 @@ Algorithm::Algorithm(double orp, double error, double tolerance){
 			}
 		}
 
-		error -= 1;
+	error -= 1;
 	}
 	
 	

@@ -19,9 +19,6 @@ class Algorithm{
 //  Mesh V_Mesh, V_TempMesh;    //Mesh 
 	double pot; // Temporary storage variable for potential
  public:
- // will skip shapes and test with an empty mesh first
- // therefore, the constructor won't take any arguments for now
-
   Algorithm(double, double, double);     //constructor
   ~Algorithm();    //destructor
 

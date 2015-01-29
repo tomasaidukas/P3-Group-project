@@ -6,11 +6,14 @@
 #include "algorithm.h"
 
 int main(){
+
+/*
   Mesh mymesh(3,3);
   std::cin >> mymesh;
   std::cout << mymesh;
+  */
   
-  Algorithm algorithm();
+  Algorithm algorithm(1.5,500,1);
   
   return 0;
 }
