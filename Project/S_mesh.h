@@ -17,7 +17,7 @@
 //and whether or not the point is a boundary condition.
 //An array of these points will make up the mesh.
 typedef struct{
-  double potential;
+  double V;
   bool isBoundary;
 }meshpoint;
 
@@ -26,11 +26,11 @@ typedef struct{
 class Mesh{
  private:
   meshpoint **matrix;     //array of meshpoints
-  int mn_dimX, mndimY;    //dimensions of array
- 
+  int mn_dimX, mn_dimY;    //dimensions of array
+  
  public:
-  Mesh();     //constructor
- ~Mesh():     //destructor
+  Mesh(int, int);     //constructor
+  ~Mesh();     //destructor
 };
 
 
