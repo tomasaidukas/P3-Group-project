@@ -29,8 +29,8 @@ class Mesh{
   int mn_dimX, mndimY;    //dimensions of array
  
  public:
-  Mesh();     //constructor
- ~Mesh():     //destructor
+  Mesh(int, int);     //constructor
+  ~Mesh();     //destructor
 };
 
 
