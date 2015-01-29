@@ -27,11 +27,7 @@ class Mesh{
  private:
   meshpoint **matrix;     //array of meshpoints
   int mn_dimX, mn_dimY;    //dimensions of array
-<<<<<<< HEAD
-  
-=======
- 
->>>>>>> c3b1f2ef37be591568add41bd7b17e4d2dd20ccf
+
  public:
   Mesh(int, int);     //constructor
   ~Mesh();     //destructor
