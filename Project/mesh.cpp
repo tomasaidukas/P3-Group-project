@@ -62,7 +62,7 @@ bool Mesh::getisBoundary(int i, int j)
 //friend function to overload << operator
 //e.g. cout << mymesh
 //loops over valeus of mesh and outputs them
-std::ostream& opeg++rator<<(std::ostream &os_out, Mesh &thismesh)
+std::ostream& operator<<(std::ostream &os_out, Mesh &thismesh)
 {
   for (int i=0; i<thismesh.mn_dimX; i++){
     for (int j=0; j<thismesh.mn_dimY; j++){
