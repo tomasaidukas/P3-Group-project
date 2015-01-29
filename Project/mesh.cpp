@@ -56,6 +56,7 @@ std::ostream& operator<<(std::ostream &os_out, Mesh &thismesh)
 //loops over values of mesh to input them
 std::istream& operator>>(std::istream &os_in, Mesh &thismesh)
 {
+std::cout << "Enter values for a " << thismesh.mn_dimX << "x" << thismesh.mn_dimY << " matrix." << std::endl;
   for (int i=0; i<thismesh.mn_dimX; i++){
     for (int j=0; j<thismesh.mn_dimY; j++){
       os_in >>  thismesh.matrix[i][j].V;
