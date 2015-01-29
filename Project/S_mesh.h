@@ -26,10 +26,10 @@ typedef struct{
 class Mesh{
  private:
   meshpoint **matrix;     //array of meshpoints
-  int mn_dimX, mndimY;    //dimensions of array
+  int mn_dimX, mn_dimY;    //dimensions of array
  
  public:
-  Mesh(int int);     //constructor
+  Mesh(int, int);     //constructor
   ~Mesh();     //destructor
 };
 

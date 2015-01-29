@@ -1,7 +1,7 @@
 //Contains the function definitions for the Mesh class
 
 
-#include "mesh.h"
+#include "S_mesh.h"
 
 //CONSTRUCTOR
 //Allocates memory to the 2D array of meshpoints
