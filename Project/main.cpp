@@ -2,7 +2,7 @@
 #include<iostream>
 
 //user-defined header files
-#include "S_mesh.h"
+#include "mesh.h"
 
 
 int main(){
