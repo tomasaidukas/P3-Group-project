@@ -18,18 +18,11 @@ Algorithm::Algorithm(double orp, double error, double tolerance){
 	
 	// Boundary conditions for the parallel plates
 	for (int Y = 0 ; Y<dimY ; Y++){
-		
 		V_Mesh.setV(-10,0,Y);
 		V_TempMesh.setV(-10,0,Y);
 		V_Mesh.setV(10,dimX-1,Y);
 		V_TempMesh.setV(10,dimX-1,Y);
 	}
-	
-	// Zeroes everywhere else
-	
-	//**************************************//	
-	// 		Over-relaxation algorithm		//	
-	//**************************************//
 	
 	// Initialize the estimation of the solution one iteration ahead.
 	for (int X = 1 ; X<dimX-1 ; X++){
@@ -43,14 +36,12 @@ Algorithm::Algorithm(double orp, double error, double tolerance){
 	// carry on with approximating the solution further
 	// until it is reached.
 	while (error > tolerance){
-	
 		for (int X = 1 ; X<dimX-1 ; X++){
 			for (int Y = 1 ; Y<dimY-1 ; Y++){
 				pot = (1-orp)*V_Mesh.getV(X,Y) + (orp/4)*(V_Mesh.getV(X+1,Y) + V_TempMesh.getV(X,Y-1) + V_Mesh.getV(X,Y+1) + V_TempMesh.getV(X,Y-1));
 				V_TempMesh.setV(pot,X,Y);		
 			}
 		}	
-		
 		// Set Potential = PotentialNEW
 		for (int X = 1 ; X<dimX-1 ; X++){
 			for (int Y = 1 ; Y<dimY-1 ; Y++){
@@ -61,13 +52,21 @@ Algorithm::Algorithm(double orp, double error, double tolerance){
 
 	error -= 1;
 	}
-	
-	
-	
-	
-	
+}
 
 
+void Algorithm::GetData(){
+	
+	std::ofstream data;
+	data.open ("Potential_Values.txt");
+
+	for (int X = 0 ; X<V_Mesh.getDimX() ; X++){
+		for (int Y = 0 ; Y<V_Mesh.getDimY() ; Y++){
+			data << X << " " << Y << " " << V_Mesh.getV() << std::endl ;
+		}
+	}
+	
+	data.close();
 }
 
 //DESTRUCTOR

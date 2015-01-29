@@ -27,10 +27,9 @@ class Mesh{
  private:
   meshpoint **matrix;     //array of meshpoints
   int mn_dimX, mn_dimY;    //dimensions of array
-
  public:
   Mesh(int, int);     //constructor
-  Mesh(const Mesh&); 
+  Mesh(const Mesh&); //copy constructor
   ~Mesh();     //destructor
 
   //mutator functions

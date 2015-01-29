@@ -12,15 +12,20 @@
 #define ALGORITHM_H
 
 #include<iostream>
+#include <fstream>
 #include"mesh.h"
 
 class Algorithm{
  private:
-//  Mesh V_Mesh, V_TempMesh;    //Mesh 
+	//Mesh V_Mesh;
+	//Mesh V_TempMesh;
 	double pot; // Temporary storage variable for potential
  public:
   Algorithm(double, double, double);     //constructor
   ~Algorithm();    //destructor
+  
+  //accesor functions
+  void GetData();
 
 };
 
