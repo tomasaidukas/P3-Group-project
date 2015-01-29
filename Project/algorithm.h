@@ -13,18 +13,16 @@
 
 #include<iostream>
 #include"mesh.h"
-#include"shape.h"
 
 class Algorithm{
  private:
-  Mesh V_Mesh, V_TempMesh;    //Mesh 
-  double orp;	  //Over-relaxation	parameter
-  double error;   //Error tolerance of the algorithm
+//  Mesh V_Mesh, V_TempMesh;    //Mesh 
+	double pot; // Temporary storage variable for potential
  public:
  // will skip shapes and test with an empty mesh first
  // therefore, the constructor won't take any arguments for now
 
-  Algorithm();     //constructor
+  Algorithm(double, double, double);     //constructor
   ~Algorithm();    //destructor
 
 };

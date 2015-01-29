@@ -30,15 +30,19 @@ class Mesh{
 
  public:
   Mesh(int, int);     //constructor
+  Mesh(const Mesh&); 
   ~Mesh();     //destructor
 
   //mutator functions
   void setV(double, int, int);
   void setisBoundary(bool, int, int);
+  void setAllZero();
 
   //accesssor functions
   double getV(int, int);
   bool getisBoundary(int, int);
+  int getDimX();
+  int getDimY();
 
 
 
