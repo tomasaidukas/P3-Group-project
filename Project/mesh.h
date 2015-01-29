@@ -10,7 +10,8 @@
 #define MESH_H
 
 #include<iostream>
-
+#include<fstream>
+#include<cmath>
 
 
 //This defines a new type which contains the electric potential
@@ -28,6 +29,7 @@ class Mesh{
   meshpoint **matrix;     //array of meshpoints
   int mn_dimX, mn_dimY;    //dimensions of array
  public:
+  Mesh();			//default constructor
   Mesh(int, int);     //constructor
   Mesh(const Mesh&); //copy constructor
   ~Mesh();     //destructor
@@ -35,9 +37,12 @@ class Mesh{
   //mutator functions
   void setV(double, int, int);
   void setisBoundary(bool, int, int);
-  void setAllZero();
+  void setAllZero(); //set all array values to 0
+  void setEqual(Mesh&); //makes the arrays equal
 
   //accesssor functions
+  void FieldData(Mesh& dx, Mesh& dy); //outputs field to a file
+  void PotentialData(); //outputs potential to a file
   double getV(int, int);
   bool getisBoundary(int, int);
   int getDimX();

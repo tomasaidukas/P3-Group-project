@@ -7,16 +7,27 @@
 // and when it satisfies the tolerance it should stop. Therefore, error here is used just for testing purposes for now.
 Algorithm::Algorithm(double orp, double error, double tolerance){
 	
-	// V_Mesh is a 2D array to store the potential	
+	
+	//**************************************//	
+	// 	Set arrays for potential and field	//	
+	//**************************************//
 	Mesh V_Mesh(100,100);
 	Mesh V_TempMesh(V_Mesh);
+	Mesh EF_dxMesh(V_Mesh);
+	Mesh EF_dyMesh(V_Mesh);
+	Mesh EF_Mesh(V_Mesh);
 	
+	// Make the Mesh zero initialy
+	V_Mesh.setAllZero();
+	
+	// Variables for convenience
 	double dimX = V_Mesh.getDimX();
 	double dimY = V_Mesh.getDimY();
 	
-	V_Mesh.setAllZero();
 	
-	// Boundary conditions for the parallel plates
+	//**************************************//	
+	// 	Boundary conditions (for now)		//	
+	//**************************************//
 	for (int Y = 0 ; Y<dimY ; Y++){
 		V_Mesh.setV(-10,0,Y);
 		V_TempMesh.setV(-10,0,Y);
@@ -24,7 +35,10 @@ Algorithm::Algorithm(double orp, double error, double tolerance){
 		V_TempMesh.setV(10,dimX-1,Y);
 	}
 	
-	// Initialize the estimation of the solution one iteration ahead.
+	//**************************************//	
+	// 		Solution one iteration ahead	//
+	//	 	using the Jacobi method			//	
+	//**************************************//
 	for (int X = 1 ; X<dimX-1 ; X++){
 		for (int Y = 1 ; Y<dimY-1 ; Y++){
 			pot = (V_Mesh.getV(X+1,Y) + V_Mesh.getV(X-1,Y) + V_Mesh.getV(X,Y+1) + V_Mesh.getV(X,Y-1))/4;
@@ -32,41 +46,49 @@ Algorithm::Algorithm(double orp, double error, double tolerance){
 		}
 	}
 	
+	//**************************************//	
+	//		Over-relaxation algorithm		//	
+	//**************************************//
 	// While the error is bigger than the tolerated one
 	// carry on with approximating the solution further
 	// until it is reached.
 	while (error > tolerance){
+		//main algorithm
 		for (int X = 1 ; X<dimX-1 ; X++){
 			for (int Y = 1 ; Y<dimY-1 ; Y++){
-				pot = (1-orp)*V_Mesh.getV(X,Y) + (orp/4)*(V_Mesh.getV(X+1,Y) + V_TempMesh.getV(X,Y-1) + V_Mesh.getV(X,Y+1) + V_TempMesh.getV(X,Y-1));
+				pot = (1-orp)*V_Mesh.getV(X,Y) + (orp/4)*(V_Mesh.getV(X+1,Y) + V_TempMesh.getV(X-1,Y) + V_Mesh.getV(X,Y+1) + V_TempMesh.getV(X,Y-1));
 				V_TempMesh.setV(pot,X,Y);		
 			}
 		}	
-		// Set Potential = PotentialNEW
-		for (int X = 1 ; X<dimX-1 ; X++){
-			for (int Y = 1 ; Y<dimY-1 ; Y++){
-				pot = V_Mesh.getV(X,Y);
-				V_TempMesh.setV(pot,X,Y);	
-			}
-		}
-
+	// Set old potential = new potential
+	V_Mesh.setEqual(V_TempMesh);
+	// Approach the tolerance by 1
 	error -= 1;
 	}
-}
-
-
-void Algorithm::GetData(){
 	
-	std::ofstream data;
-	data.open ("Potential_Values.txt");
-
-	for (int X = 0 ; X<V_Mesh.getDimX() ; X++){
-		for (int Y = 0 ; Y<V_Mesh.getDimY() ; Y++){
-			data << X << " " << Y << " " << V_Mesh.getV() << std::endl ;
+	
+	//**************************************//	
+	// 			Electric field				//	
+	//**************************************//
+	for (int X = 0 ; X<dimX-1 ; X++){
+		for (int Y = 0 ; Y<dimY-1 ; Y++){
+			// Components of the electric field
+			field = V_TempMesh.getV(X+1,Y) - V_TempMesh.getV(X,Y);
+			EF_dxMesh.setV(field,X,Y);
+			field =  V_TempMesh.getV(X,Y+1) - V_TempMesh.getV(X,Y); 
+			EF_dyMesh.setV(field,X,Y);
+			
+			// Magnitude of E	
+			field = sqrt(pow(EF_dxMesh.getV(X,Y),2) + pow(EF_dyMesh.getV(X,Y),2));
+			EF_Mesh.setV(field,X,Y);
 		}
 	}
 	
-	data.close();
+	//**************************************//	
+	// 				Data files				//
+	//**************************************//
+	V_Mesh.PotentialData();
+	EF_Mesh.FieldData(EF_dxMesh, EF_dyMesh);
 }
 
 //DESTRUCTOR

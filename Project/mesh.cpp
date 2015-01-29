@@ -3,6 +3,10 @@
 
 #include "mesh.h"
 
+Mesh::Mesh(){
+
+}
+
 //CONSTRUCTOR
 //Allocates memory to the 2D array of meshpoints
 Mesh::Mesh(int n_dimX, int n_dimY): mn_dimX(n_dimX),
@@ -71,6 +75,16 @@ void Mesh::setAllZero(){
 	
 }
 
+void Mesh::setEqual(Mesh& tempmesh){
+	for (int X = 1 ; X<mn_dimX-1 ; X++){
+		for (int Y = 1 ; Y<mn_dimY-1 ; Y++){
+			matrix[X][Y].V = tempmesh.matrix[X][Y].V;	
+		}
+	}
+}
+
+
+
 //ACCESSOR FUNCTIONS
 double Mesh::getV(int i, int j)
 {
@@ -88,6 +102,39 @@ int Mesh::getDimX(){
 
 int Mesh::getDimY(){
 	return mn_dimY;
+}
+
+void Mesh::PotentialData(){
+	
+	std::ofstream potentialData;
+	potentialData.open ("Potential_Values.txt");
+	
+	potentialData << "X " << "Y " << "V " << std::endl;
+	for (int X = 0 ; X<mn_dimX ; X++){
+		for (int Y = 0 ; Y<mn_dimY ; Y++){
+			potentialData << X << " " << Y << " " << matrix[X][Y].V << std::endl ;
+			
+		}
+	}
+	
+	potentialData.close();
+}
+
+
+void Mesh::FieldData(Mesh& dx, Mesh& dy){
+	
+	std::ofstream fieldData;
+	fieldData.open ("Field_Values.txt");
+
+	fieldData << "X " << "Y " << "|E| " << "dxE " << "dyE " << std::endl;
+	for (int X = 0 ; X<mn_dimX ; X++){
+		for (int Y = 0 ; Y<mn_dimY ; Y++){
+			fieldData << X << " " << Y << " " << matrix[X][Y].V << " " << dx.matrix[X][Y].V << " " << dy.matrix[X][Y].V  << std::endl ;
+			
+		}
+	}
+	
+	fieldData.close();
 }
 
 

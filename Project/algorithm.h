@@ -11,22 +11,18 @@
 #ifndef ALGORITHM_H
 #define ALGORITHM_H
 
-#include<iostream>
+#include <iostream>
 #include <fstream>
-#include"mesh.h"
+#include "mesh.h"
 
 class Algorithm{
  private:
-	//Mesh V_Mesh;
-	//Mesh V_TempMesh;
+	Mesh V_Mesh;
 	double pot; // Temporary storage variable for potential
+	double field; // Temporary storage variable for el. field
  public:
   Algorithm(double, double, double);     //constructor
   ~Algorithm();    //destructor
-  
-  //accesor functions
-  void GetData();
-
 };
 
 
