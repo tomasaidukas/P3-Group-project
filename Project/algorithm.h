@@ -17,7 +17,7 @@
 
 class Algorithm{
  private:
-  double mn_dimX, mn_dimY;//dimensions of mesh
+  int mn_dimX, mn_dimY;//dimensions of mesh
   Mesh V_Mesh;//Primary Mesh
   Mesh V_TempMesh;//Secondary Mesh
   double md_pot; // Temporary storage variable for potential
