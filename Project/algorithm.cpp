@@ -8,8 +8,41 @@ Algorithm::Algorithm(double d_orp, double d_error, double d_tolerance): md_orp(d
 									     md_error(d_error),
 									     md_tolerance(d_tolerance)
 {
-  V_Mesh = Mesh(100,100);
+  //user enters dimensions of mesh
+  std::cout << "Enter Mesh Dimensions AxB" << std::endl;
+  std::cout << "A: ";
+  std::cin >> mn_dimX;
+  std::cout << "B: ";
+  std::cin >> mn_dimY;
+  
+  //initialise primary mesh
+  V_Mesh = Mesh(mn_dimX,mn_dimY);
+  V_Mesh.setAllZero();
+  
+  //set the boundary conditions
+  setBoundary();
+  
+  //copy boundary conditions to secondary mesh
+  V_TempMesh = Mesh(V_Mesh);
 }
+
+
+//SET BOUNDARY
+//sets the boundary conditions before the algorithm runs
+void Algorithm::setBoundary()
+{
+  //current boundary conditions
+  for (int j=0; j<mn_dimY; j++){
+    V_Mesh.setisBoundary(1,0,j);//x=0
+    V_Mesh.setV(-10,0,j);
+
+    V_Mesh.setisBoundary(1,mn_dimX-1,j);//x=mn_dimX-1
+    V_Mesh.setV(10,mn_dimX-1,j);
+  }
+}
+
+
+
 
 
 
@@ -28,37 +61,18 @@ void Algorithm::runAlgorithm(){
 	// 	Set arrays for potential and field	//	
 	//**************************************//
   
-	Mesh V_TempMesh(V_Mesh);
 	Mesh EF_dxMesh(V_Mesh);
 	Mesh EF_dyMesh(V_Mesh);
 	Mesh EF_Mesh(V_Mesh);
-	
-	// Make the Mesh zero initialy
-	V_Mesh.setAllZero();
-	
-	// Variables for convenience
-	double dimX = V_Mesh.getDimX();
-	double dimY = V_Mesh.getDimY();
-	
-	
-	//**************************************//	
-	// 	Boundary conditions (for now)		//	
-	//**************************************//
-	for (int Y = 0 ; Y<dimY ; Y++){
-		V_Mesh.setV(-10,0,Y);
-		V_TempMesh.setV(-10,0,Y);
-		V_Mesh.setV(10,dimX-1,Y);
-		V_TempMesh.setV(10,dimX-1,Y);
-	}
 	
 	//**************************************//	
 	// 		Solution one iteration ahead	//
 	//	 	using the Jacobi method			//	
 	//**************************************//
-	for (int X = 1 ; X<dimX-1 ; X++){
-		for (int Y = 1 ; Y<dimY-1 ; Y++){
-			pot = (V_Mesh.getV(X+1,Y) + V_Mesh.getV(X-1,Y) + V_Mesh.getV(X,Y+1) + V_Mesh.getV(X,Y-1))/4;
-			V_TempMesh.setV(pot,X,Y);
+	for (int X = 1 ; X<mn_dimX-1 ; X++){
+		for (int Y = 1 ; Y<mn_dimY-1 ; Y++){
+			md_pot = (V_Mesh.getV(X+1,Y) + V_Mesh.getV(X-1,Y) + V_Mesh.getV(X,Y+1) + V_Mesh.getV(X,Y-1))/4;
+			V_TempMesh.setV(md_pot,X,Y);
 		}
 	}
 	
@@ -70,10 +84,10 @@ void Algorithm::runAlgorithm(){
 	// until it is reached.
 	while (md_error > md_tolerance){
 		//main algorithm
-		for (int X = 1 ; X<dimX-1 ; X++){
-			for (int Y = 1 ; Y<dimY-1 ; Y++){
-				pot = (1-md_orp)*V_Mesh.getV(X,Y) + (md_orp/4)*(V_Mesh.getV(X+1,Y) + V_TempMesh.getV(X-1,Y) + V_Mesh.getV(X,Y+1) + V_TempMesh.getV(X,Y-1));
-				V_TempMesh.setV(pot,X,Y);		
+		for (int X = 1 ; X<mn_dimX-1 ; X++){
+			for (int Y = 1 ; Y<mn_dimY-1 ; Y++){
+				md_pot = (1-md_orp)*V_Mesh.getV(X,Y) + (md_orp/4)*(V_Mesh.getV(X+1,Y) + V_TempMesh.getV(X-1,Y) + V_Mesh.getV(X,Y+1) + V_TempMesh.getV(X,Y-1));
+				V_TempMesh.setV(md_pot,X,Y);		
 			}
 		}	
 	// Set old potential = new potential
@@ -86,17 +100,17 @@ void Algorithm::runAlgorithm(){
 	//**************************************//	
 	// 			Electric field				//	
 	//**************************************//
-	for (int X = 0 ; X<dimX-1 ; X++){
-		for (int Y = 0 ; Y<dimY-1 ; Y++){
+	for (int X = 0 ; X<mn_dimX-1 ; X++){
+		for (int Y = 0 ; Y<mn_dimY-1 ; Y++){
 			// Components of the electric field
-			field = V_TempMesh.getV(X+1,Y) - V_TempMesh.getV(X,Y);
-			EF_dxMesh.setV(field,X,Y);
-			field =  V_TempMesh.getV(X,Y+1) - V_TempMesh.getV(X,Y); 
-			EF_dyMesh.setV(field,X,Y);
+			md_field = V_TempMesh.getV(X+1,Y) - V_TempMesh.getV(X,Y);
+			EF_dxMesh.setV(md_field,X,Y);
+			md_field =  V_TempMesh.getV(X,Y+1) - V_TempMesh.getV(X,Y); 
+			EF_dyMesh.setV(md_field,X,Y);
 			
 			// Magnitude of E	
-			field = sqrt(pow(EF_dxMesh.getV(X,Y),2) + pow(EF_dyMesh.getV(X,Y),2));
-			EF_Mesh.setV(field,X,Y);
+			md_field = sqrt(pow(EF_dxMesh.getV(X,Y),2) + pow(EF_dyMesh.getV(X,Y),2));
+			EF_Mesh.setV(md_field,X,Y);
 		}
 	}
 	
