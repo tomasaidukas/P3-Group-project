@@ -3,15 +3,31 @@
 #include "algorithm.h"
 
 //CONSTRUCTOR
+//sets up values to run in the algorithm
+Algorithm::Algorithm(double d_orp, double d_error, double d_tolerance): md_orp(d_orp),
+									     md_error(d_error),
+									     md_tolerance(d_tolerance)
+{
+  V_Mesh = Mesh(100,100);
+}
+
+
+
+
+
+
+
+
+//RUN ALGORITHM
 // The arguments such as error should be done inside the algorithm by looking at the different between the adjacent level
 // and when it satisfies the tolerance it should stop. Therefore, error here is used just for testing purposes for now.
-Algorithm::Algorithm(double orp, double error, double tolerance){
+void Algorithm::runAlgorithm(){
 	
 	
 	//**************************************//	
 	// 	Set arrays for potential and field	//	
 	//**************************************//
-	Mesh V_Mesh(100,100);
+  
 	Mesh V_TempMesh(V_Mesh);
 	Mesh EF_dxMesh(V_Mesh);
 	Mesh EF_dyMesh(V_Mesh);
@@ -52,18 +68,18 @@ Algorithm::Algorithm(double orp, double error, double tolerance){
 	// While the error is bigger than the tolerated one
 	// carry on with approximating the solution further
 	// until it is reached.
-	while (error > tolerance){
+	while (md_error > md_tolerance){
 		//main algorithm
 		for (int X = 1 ; X<dimX-1 ; X++){
 			for (int Y = 1 ; Y<dimY-1 ; Y++){
-				pot = (1-orp)*V_Mesh.getV(X,Y) + (orp/4)*(V_Mesh.getV(X+1,Y) + V_TempMesh.getV(X-1,Y) + V_Mesh.getV(X,Y+1) + V_TempMesh.getV(X,Y-1));
+				pot = (1-md_orp)*V_Mesh.getV(X,Y) + (md_orp/4)*(V_Mesh.getV(X+1,Y) + V_TempMesh.getV(X-1,Y) + V_Mesh.getV(X,Y+1) + V_TempMesh.getV(X,Y-1));
 				V_TempMesh.setV(pot,X,Y);		
 			}
 		}	
 	// Set old potential = new potential
 	V_Mesh.setEqual(V_TempMesh);
 	// Approach the tolerance by 1
-	error -= 1;
+	md_error -= 1;
 	}
 	
 	
@@ -93,3 +109,6 @@ Algorithm::Algorithm(double orp, double error, double tolerance){
 
 //DESTRUCTOR
 Algorithm::~Algorithm(){}
+
+
+

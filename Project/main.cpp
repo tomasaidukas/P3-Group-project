@@ -13,7 +13,9 @@ int main(){
   std::cout << mymesh;
   */
   
-  Algorithm algorithm(1.5,500,1);
+  Algorithm algorithm(1.5,500,1);//sets up the algorithm variables
+  
+  algorithm.runAlgorithm();//runs the algorithm
   
   return 0;
 }

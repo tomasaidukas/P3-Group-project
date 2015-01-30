@@ -17,12 +17,19 @@
 
 class Algorithm{
  private:
-	Mesh V_Mesh;
-	double pot; // Temporary storage variable for potential
-	double field; // Temporary storage variable for el. field
+  Mesh V_Mesh;
+  double pot; // Temporary storage variable for potential
+  double field; // Temporary storage variable for el. field
+
+  double md_orp; //over-relaxation parameter
+  double md_error;
+  double md_tolerance;//error tolerance
+
  public:
   Algorithm(double, double, double);     //constructor
   ~Algorithm();    //destructor
+
+  void runAlgorithm();//runs the algorithm
 };
 
 
