@@ -28,7 +28,8 @@ class Mesh{
  private:
   meshpoint **matrix;     //array of meshpoints
   int mn_dimX, mn_dimY;    //dimensions of array
- public:
+ 
+public:
   Mesh();			//default constructor
   Mesh(int, int);     //constructor
   Mesh(const Mesh&); //copy constructor
@@ -39,6 +40,7 @@ class Mesh{
   void setisBoundary(bool, int, int);
   void setAllZero(); //set all array values to 0
   void setEqual(Mesh&); //makes the arrays equal
+  Mesh& operator=(const Mesh&); //assignment operator
 
   //accesssor functions
   void FieldData(Mesh& dx, Mesh& dy); //outputs field to a file

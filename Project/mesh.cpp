@@ -21,23 +21,57 @@ Mesh::Mesh(int n_dimX, int n_dimY): mn_dimX(n_dimX),
   }
 }
 
-// copy constructor
+//COPY CONSTRUCTOR
+//reproduces mesh taken as argument
+//e.g. Mesh(oldmesh)
 Mesh::Mesh(const Mesh& tempmesh): mn_dimX(tempmesh.mn_dimX),
 				    mn_dimY(tempmesh.mn_dimY)
 {
-	//allocate memory for x array
+  //allocate memory for x array
   matrix = new meshpoint*[mn_dimX];
 
   //allocate memory for y arrays
   for (int i=0; i<mn_dimX; i++){
     matrix[i] = new meshpoint[mn_dimY];
    }
-   
-  for (int x=0; x<mn_dimX; x++ ){
-  	 for (int y=0; y<mn_dimY; y++ ){
-  		matrix[x][y] = tempmesh.matrix[x][y];
+  //copy values 
+  for (int i=0; i<mn_dimX; i++ ){
+  	 for (int j=0; j<mn_dimY; j++ ){
+  		matrix[i][j] = tempmesh.matrix[i][j];
   	}
   }
+}
+
+//ASSIGNMENT OPERATOR OVERLOAD
+//sets meshes equal to each other
+//e.g. mesh1 = mesh2
+Mesh & Mesh::operator=(const Mesh& rhs)
+{
+  if (this == &rhs) { return *this; } //if meshes are equal return out
+  
+  //deallocate matrix memory
+  for (int i=0; i<mn_dimX; i++){
+    delete[] matrix[i];
+  }
+  delete[] matrix;
+  
+  //copy new private member variables 
+  mn_dimX = rhs.mn_dimX;
+  mn_dimY = rhs.mn_dimY;
+  
+  //allocate new matrix memory
+  matrix = new meshpoint*[mn_dimX];
+  for (int i=0; i<mn_dimX; i++){
+    matrix[i] = new meshpoint[mn_dimY];
+  }
+
+  //copy matrix values over
+  for (int i=0; i<mn_dimX; i++){
+    for (int j=0; j<mn_dimY; j++){
+      matrix[i][j] = rhs.matrix[i][j];
+    }
+  }
+  return *this;
 }
 
 
