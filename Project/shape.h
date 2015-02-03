@@ -19,7 +19,7 @@
 //It will be used to define the position (vertices) of shapes
 typedef struct{
   int m_x;
-  int m_y
+  int m_y;
 }point;
 
 

@@ -2,10 +2,10 @@
 CC=g++	
 
 #object files
-obj=main.o mesh.o algorithm.o shape.o
+obj=main.o mesh.o algorithm.o
 
 #header files
-headers=main.h mesh.h algorithm.h shape.h
+headers=main.h mesh.h algorithm.h
 
 main : $(obj)
 	$(CC) -o $@ $^ -lm
