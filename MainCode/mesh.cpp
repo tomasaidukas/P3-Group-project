@@ -115,12 +115,12 @@ void Mesh::setV(double d_V, int i, int j)
   matrix[i][j].V = d_V;
 }
 
-/*
+
 void Mesh::setisBoundary(bool b_cond, int i, int j)
 {
   matrix[i][j].isBoundary = b_cond;
 }
-*/
+
 void Mesh::setAllZero(){
 	for (int X = 0 ; X<mn_dimX ; X++){
 		for (int Y = 0 ; Y<mn_dimY ; Y++){	
@@ -144,11 +144,11 @@ double Mesh::getV(int i, int j)
 {
   return matrix[i][j].V;
 }
-/*
+
 bool Mesh::getisBoundary(int i, int j)
 {
   return matrix[i][j].isBoundary;
-}*/
+}
 
 int Mesh::getDimX(){
 	return mn_dimX;

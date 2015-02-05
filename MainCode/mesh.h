@@ -19,6 +19,7 @@
 //An array of these points will make up the mesh.
 typedef struct{
   double V;
+  bool isBoundary;
 }meshpoint;
 
 
@@ -36,6 +37,7 @@ public:
 
   //mutator functions
   void setV(double, int, int);
+  void setisBoundary(bool, int, int);
   void Allocate(int, int);
   void setAllZero(); //set all array values to 0
   void setEqual(Mesh&); //makes the arrays equal
@@ -45,6 +47,7 @@ public:
   void FieldData(Mesh& dx, Mesh& dy); //outputs field to a file
   void PotentialData(); //outputs potential to a file
   double getV(int, int);
+  bool getisBoundary(int, int);
   int getDimX();
   int getDimY();
 };
