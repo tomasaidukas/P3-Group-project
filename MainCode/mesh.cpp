@@ -191,6 +191,3 @@ void Mesh::FieldData(Mesh& dx, Mesh& dy){
 	fieldData.close();
 }
 
-
-
-

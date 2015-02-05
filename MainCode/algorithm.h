@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <cmath>
 #include "mesh.h"
 #include "CImg.h"
 using namespace cimg_library;
@@ -25,11 +26,16 @@ class Algorithm{
   double md_orp; //over-relaxation parameter
   double md_error;
   double md_tolerance;//error tolerance
+  double md_voltage;
+  int counter; //counts the number of iterations taken
   
-  Algorithm(double, double, double);     //constructor
+  Algorithm(double,double);     //constructor
   ~Algorithm();    //destructor
   void runAlgorithm();
   void setBoundary(double);
+  void eField(Mesh&);
+  double calcError(Mesh&, Mesh&);
+  bool Tolerance(double,double);
   
   };
   

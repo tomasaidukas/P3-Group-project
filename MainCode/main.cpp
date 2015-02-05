@@ -9,19 +9,8 @@
 
 int main(){
 
-  Algorithm algorithm(1.5,500,1);//sets up the algorithm variables
+  Algorithm algorithm(0.0001,100);//sets up the algorithm variables
   algorithm.runAlgorithm();
-
-    //CImg<unsigned char> image("potential.png"), empty(40,40,1,3);	
-    /*
-	int width = image.width();
-    int height = image.height();
-    
-    for (int y = 0; y < height; y++)
-        for (int x = 0; x < width; x++)
-            cout << "(" << x << "," << y << ") ="
-                 << " R" << (int)image(x,y,0,0)
-                 << " G" << (int)image(x,y,0,1)
-                 << " B" << (int)image(x,y,0,2) << endl;*/
-    return 0;
+  std::cout << algorithm.counter << std::endl;
+  return 0;
 }
