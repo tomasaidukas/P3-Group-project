@@ -1,4 +1,5 @@
 #include "algorithm.h"
+#include <iostream>
 
 //CONSTRUCTOR
 //sets up values to run in the algorithm
@@ -13,6 +14,8 @@ Algorithm::Algorithm(double d_orp, double d_error, double d_tolerance): md_orp(d
   a_dimY = image.height();  
   a_dimX = image.width();
   
+  std::cout << a_dimY << " " << a_dimX << std::endl;
+
   //allocate dimensions to new arrays
   V_Mesh.Allocate(a_dimX,a_dimY);
   V_TempMesh.Allocate(a_dimX,a_dimY);
@@ -39,17 +42,24 @@ void Algorithm::setBoundary(double pot)
 	for (int x=0 ; x<a_dimX-1 ; x++){
 		for (int y=0 ; y<a_dimY-1 ; y++){
 			if( ((int) image(x,y,0,0) == 255) && ((int)image(x,y,0,1)==0) && ((int)image(x,y,0,2) == 0) ){
-				//V_Mesh.setV(pot,x,y);
+				V_Mesh.setV(pot,x,y);
+				V_Mesh.setisBoundary(true, x, y);
 				V_TempMesh.setV(pot,x,y);
+				V_TempMesh.setisBoundary(true, x, y);
 			}else if( ((int) image(x,y,0,0) == 0) && ((int)image(x,y,0,1)==255) && ((int)image(x,y,0,2) == 0) ){
-				//V_Mesh.setV(0,x,y); 
+				V_Mesh.setV(0,x,y); 
+				V_Mesh.setisBoundary(true, x, y);
 				V_TempMesh.setV(0,x,y);
+				V_TempMesh.setisBoundary(true, x, y);
 			}else if( ((int) image(x,y,0,0) == 0) && ((int)image(x,y,0,1)==0) && ((int)image(x,y,0,2) == 255) ){
-				//V_Mesh.setV(-pot,x,y);
+				V_Mesh.setV(-pot,x,y);
+				V_Mesh.setisBoundary(true, x, y);
 				V_TempMesh.setV(-pot,x,y);
+				V_TempMesh.setisBoundary(true, x, y);
 			}
 		}
 	}
+	std::cout << "done image processing" << std::endl;
  }
 
 
@@ -78,10 +88,12 @@ void Algorithm::runAlgorithm(){
 		//main algorithm
 		for (int X = 1 ; X<a_dimX-1 ; X++){
 			for (int Y = 1 ; Y<a_dimY-1 ; Y++){
-				setBoundary(10);
+			  if (!V_Mesh.getisBoundary(X,Y)){
 				
 				md_pot = (1-md_orp)*V_Mesh.getV(X,Y) + (md_orp/4)*(V_Mesh.getV(X+1,Y) + V_TempMesh.getV(X-1,Y) + V_Mesh.getV(X,Y+1) + V_TempMesh.getV(X,Y-1));
-				V_TempMesh.setV(md_pot,X,Y);		
+				V_TempMesh.setV(md_pot,X,Y);
+			  }	
+			  
 			}
 		}	
 	// Set old potential = new potential
