@@ -7,6 +7,8 @@
 #include <cmath>
 #include "mesh.h"
 #include "CImg.h"
+#include <cstring>
+#define PI  3.141592
 using namespace cimg_library;
 
 class Algorithm{
@@ -24,18 +26,18 @@ class Algorithm{
   double md_pot; // Temporary storage variable for potential
   double md_field; // Temporary storage variable for el. field
   double md_orp; //over-relaxation parameter
-  double md_error;
+  double md_error; //the error variable between two iterations in "time"
   double md_tolerance;//error tolerance
-  double md_voltage;
+  double md_voltage; //specify the voltage
   int counter; //counts the number of iterations taken
   
-  Algorithm(double,double);     //constructor
+  Algorithm(double,double, std::string);     //constructor
   ~Algorithm();    //destructor
-  void runAlgorithm();
-  void setBoundary(double);
-  void eField(Mesh&);
-  double calcError(Mesh&, Mesh&);
-  bool Tolerance(double,double);
+  void runAlgorithm(); //runs the main algorithm
+  void setBoundary(double); //sets the boundaries from an image file
+  void eField(Mesh&); //fills in the electric field arrays
+  double calcError(Mesh&, Mesh&); //calculates md_error
+  double ORP(); //calculates over-relaxation parameter
   
   };
   

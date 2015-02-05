@@ -21,6 +21,6 @@ reset
 
 set terminal png
 set output "Enum.png"
-plot "Field_Values.txt" using 2:1:4:3:5 notitle with vectors head size 1,20,60 filled lc palette
+plot "Field_Values.txt" using 2:1:4:3:5 notitle with vectors head size 1,20,60 
 exit
 
