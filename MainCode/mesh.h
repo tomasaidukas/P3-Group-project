@@ -48,6 +48,9 @@ public:
   bool getisBoundary(int, int);
   int getDimX();
   int getDimY();
+
+  //friend functions
+  friend std::ostream& operator<<(std::ostream& out, const Mesh& mesh);
 };
 
 

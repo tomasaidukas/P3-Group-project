@@ -170,3 +170,15 @@ void Mesh::FieldData(Mesh& dx, Mesh& dy){
 	fieldData.close();
 }
 
+
+
+//FRIEND FUNCTIONS
+std::ostream& operator<<(std::ostream& out, const Mesh& mesh)
+{
+  for (int i=0; i<mesh._dimx; i++){
+    for (int j=0; j<mesh._dimy; j++){
+      out << mesh.matrix[i][j].V << " ";
+    }
+    out << std::endl;
+  }
+}
