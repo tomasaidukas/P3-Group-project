@@ -3,43 +3,42 @@
 
 #include "mesh.h"
 
-Mesh::Mesh(){
-
- matrix = new meshpoint*;
- 
-}
+Mesh::Mesh():_dimx(0),
+	     _dimy(0),
+	     matrix(0)
+{}
 
 //CONSTRUCTOR
 //Allocates memory to the 2D array of meshpoints
-Mesh::Mesh(int n_dimX, int n_dimY): mn_dimX(n_dimX),
-				    mn_dimY(n_dimY)
+Mesh::Mesh(int dimx, int dimy): _dimx(dimx),
+				_dimy(dimy)
 {
   //allocate memory for x array
-  matrix = new meshpoint*[mn_dimX];
+  matrix = new meshpoint*[_dimx];
 
   //allocate memory for y arrays
-  for (int i=0; i<mn_dimX; i++){
-    matrix[i] = new meshpoint[mn_dimY];
+  for (int i=0; i<_dimx; i++){
+    matrix[i] = new meshpoint[_dimy];
   }
 }
 
 //COPY CONSTRUCTOR
 //reproduces mesh taken as argument
 //e.g. Mesh(oldmesh)
-Mesh::Mesh(const Mesh& tempmesh): mn_dimX(tempmesh.mn_dimX),
-				    mn_dimY(tempmesh.mn_dimY)
+Mesh::Mesh(const Mesh& tempmesh): _dimx(tempmesh._dimx),
+				    _dimy(tempmesh._dimy)
 {
   //allocate memory for x array
-  matrix = new meshpoint*[mn_dimX];
+  matrix = new meshpoint*[_dimx];
 
   //allocate memory for y arrays
-  for (int i=0; i<mn_dimX; i++){
-    matrix[i] = new meshpoint[mn_dimY];
+  for (int i=0; i<_dimx; i++){
+    matrix[i] = new meshpoint[_dimy];
    }
    
   //copy values 
-  for (int i=0; i<mn_dimX; i++ ){
-  	 for (int j=0; j<mn_dimY; j++ ){
+  for (int i=0; i<_dimx; i++ ){
+  	 for (int j=0; j<_dimy; j++ ){
   		matrix[i][j] = tempmesh.matrix[i][j];
   	}
   }
@@ -48,8 +47,8 @@ Mesh::Mesh(const Mesh& tempmesh): mn_dimX(tempmesh.mn_dimX),
 //Alocate dimensions to a mesh
 void Mesh::Allocate(int n_dimX, int n_dimY){
 
-  mn_dimX = n_dimX;
-  mn_dimY = n_dimY;
+  _dimx = n_dimX;
+  _dimy = n_dimY;
   //allocate memory for x array
   matrix = new meshpoint*[n_dimX];
 
@@ -68,24 +67,24 @@ Mesh & Mesh::operator=(const Mesh& rhs)
   if (this == &rhs) { return *this; } //if meshes are equal return out
   
   //deallocate matrix memory
-  for (int i=0; i<mn_dimX; i++){
+  for (int i=0; i<_dimx; i++){
     delete[] matrix[i];
   }
   delete[] matrix;
   
   //copy new private member variables 
-  mn_dimX = rhs.mn_dimX;
-  mn_dimY = rhs.mn_dimY;
+  _dimx = rhs._dimx;
+  _dimy = rhs._dimy;
   
   //allocate new matrix memory
-  matrix = new meshpoint*[mn_dimX];
-  for (int i=0; i<mn_dimX; i++){
-    matrix[i] = new meshpoint[mn_dimY];
+  matrix = new meshpoint*[_dimx];
+  for (int i=0; i<_dimx; i++){
+    matrix[i] = new meshpoint[_dimy];
   }
 
   //copy matrix values over
-  for (int i=0; i<mn_dimX; i++){
-    for (int j=0; j<mn_dimY; j++){
+  for (int i=0; i<_dimx; i++){
+    for (int j=0; j<_dimy; j++){
       matrix[i][j] = rhs.matrix[i][j];
     }
   }
@@ -99,7 +98,7 @@ Mesh & Mesh::operator=(const Mesh& rhs)
 Mesh::~Mesh()
 {
   //deallocate y arrays
-  for (int i=0; i<mn_dimX; i++){
+  for (int i=0; i<_dimx; i++){
     delete[] matrix[i];
   }
 	
@@ -122,8 +121,8 @@ void Mesh::setisBoundary(bool b_cond, int i, int j)
 }
 
 void Mesh::setAllZero(){
-	for (int X = 0 ; X<mn_dimX ; X++){
-		for (int Y = 0 ; Y<mn_dimY ; Y++){	
+	for (int X = 0 ; X<_dimx ; X++){
+		for (int Y = 0 ; Y<_dimy ; Y++){	
 			matrix[X][Y].V = 0;
 		}
 	}
@@ -131,8 +130,8 @@ void Mesh::setAllZero(){
 }
 
 void Mesh::setEqual(Mesh& tempmesh){
-	for (int X = 1 ; X<mn_dimX-1 ; X++){
-		for (int Y = 1 ; Y<mn_dimY-1 ; Y++){
+	for (int X = 1 ; X<_dimx-1 ; X++){
+		for (int Y = 1 ; Y<_dimy-1 ; Y++){
 			matrix[X][Y].V = tempmesh.matrix[X][Y].V;	
 		}
 	}
@@ -151,11 +150,11 @@ bool Mesh::getisBoundary(int i, int j)
 }
 
 int Mesh::getDimX(){
-	return mn_dimX;
+	return _dimx;
 }
 
 int Mesh::getDimY(){
-	return mn_dimY;
+	return _dimy;
 }
 
 void Mesh::PotentialData(){
@@ -163,9 +162,9 @@ void Mesh::PotentialData(){
 	std::ofstream potentialData;
 	potentialData.open ("Potential_Values.txt");
 	
-	for (int X = 0 ; X<mn_dimX ; X++){
+	for (int X = 0 ; X<_dimx ; X++){
 		potentialData << std::endl;
-		for (int Y = 0 ; Y<mn_dimY ; Y++){
+		for (int Y = 0 ; Y<_dimy ; Y++){
 			potentialData << matrix[X][Y].V << " " ;
 			
 		}
@@ -181,8 +180,8 @@ void Mesh::FieldData(Mesh& dx, Mesh& dy){
 	fieldData.open ("Field_Values.txt");
 
 	fieldData << "X " << "Y " << "|E| " << "dxE " << "dyE " << std::endl;
-	for (int X = 0 ; X<mn_dimX ; X++){
-		for (int Y = 0 ; Y<mn_dimY ; Y++){
+	for (int X = 0 ; X<_dimx ; X++){
+		for (int Y = 0 ; Y<_dimy ; Y++){
 			fieldData << X << " " << Y << " " << matrix[X][Y].V << " " << dx.matrix[X][Y].V << " " << dy.matrix[X][Y].V  << std::endl ;
 			
 		}
