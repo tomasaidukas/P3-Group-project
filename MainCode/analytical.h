@@ -10,7 +10,8 @@
 class Analytic : public TopAlg{
  private:
   int _radius;  //radius of cylinder
-  double _E0;   //E0
+  double _V;   //potential between plates
+  double _L; //distance between plates
 
   void setBoundary();
 
@@ -19,6 +20,7 @@ class Analytic : public TopAlg{
   Analytic(int dimx, int dimy);
   ~Analytic();
   
+ //void runNumerical();
   void runAlgorithm();
   // void printSolution();
 };
