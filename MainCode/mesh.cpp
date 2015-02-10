@@ -137,40 +137,6 @@ int Mesh::getDimY(){
 	return _dimy;
 }
 
-void Mesh::PotentialData(){
-	
-	std::ofstream potentialData;
-	potentialData.open ("Potential_Values.txt");
-	
-	for (int X = 0 ; X<_dimx ; X++){
-		potentialData << std::endl;
-		for (int Y = 0 ; Y<_dimy ; Y++){
-			potentialData << matrix[X][Y].V << " " ;
-			
-		}
-	}
-	
-	potentialData.close();
-}
-
-
-void Mesh::FieldData(Mesh& dx, Mesh& dy){
-	
-	std::ofstream fieldData;
-	fieldData.open ("Field_Values.txt");
-
-	fieldData << "X " << "Y " << "|E| " << "dxE " << "dyE " << std::endl;
-	for (int X = 0 ; X<_dimx ; X++){
-		for (int Y = 0 ; Y<_dimy ; Y++){
-			fieldData << X << " " << Y << " " << matrix[X][Y].V << " " << dx.matrix[X][Y].V << " " << dy.matrix[X][Y].V  << std::endl ;
-			
-		}
-	}
-	
-	fieldData.close();
-}
-
-
 
 //FRIEND FUNCTIONS
 std::ostream& operator<<(std::ostream& out, const Mesh& mesh)

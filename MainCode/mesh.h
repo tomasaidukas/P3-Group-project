@@ -42,8 +42,6 @@ public:
   Mesh& operator=(const Mesh&); //assignment operator
 
   //accesssor functions
-  void FieldData(Mesh& dx, Mesh& dy); //outputs field to a file
-  void PotentialData(); //outputs potential to a file
   double getV(int, int);
   bool getisBoundary(int, int);
   int getDimX();
