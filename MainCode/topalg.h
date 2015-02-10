@@ -5,6 +5,7 @@
 #define ABST_H
 
 #include "mesh.h"
+#include<cmath>
 #include<iostream>
 #include<fstream>
 
@@ -20,6 +21,7 @@ class TopAlg{
   TopAlg();
   ~TopAlg();
   
+  //  void difference(TopAlg& other);
   virtual void runAlgorithm();
   virtual void printSolution();
 
