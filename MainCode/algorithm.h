@@ -6,15 +6,14 @@
 #include <fstream>
 #include <cmath>
 #include "mesh.h"
+#include "topalg.h"
 #include "CImg.h"
 #include <cstring>
 #define PI  3.141592
 using namespace cimg_library;
 
-class Algorithm{
+class Algorithm: public TopAlg{
  private:
-  int _dimx, _dimy;//dimensions of mesh
-  Mesh _PMesh; //Primary Mesh
   Mesh _SMesh; //Secondary Mesh
   double _maxV; //maximum potential
   double _err; //eror
