@@ -10,7 +10,7 @@
 int main(){
 
 	//(tolerance,potential,image name)
-  Algorithm algorithm(0.0001,100,"potential.png");//sets up the algorithm variables
+  Algorithm algorithm(0.0001,100,"50x50.png");//sets up the algorithm variables
   algorithm.runAlgorithm();
   algorithm.printSolution();
   return 0;

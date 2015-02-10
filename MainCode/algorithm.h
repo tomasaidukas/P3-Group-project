@@ -24,6 +24,7 @@ class Algorithm: public TopAlg{
 
   //private member functions
   void setBoundary(); //sets the boundaries from an image file
+  void setEdges(int,int);	//makes edges equal to the neighbour values
   double calcError(); //calculates md_error
   double ORP(); //calculates over-relaxation parameter
 
