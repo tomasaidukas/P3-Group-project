@@ -24,6 +24,7 @@ class TopAlg{
   void difference(TopAlg& other);
   virtual void runAlgorithm();
   virtual void printSolution();
+  
 
 };
 

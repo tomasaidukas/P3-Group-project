@@ -8,6 +8,7 @@ Algorithm::Algorithm(double tol, double maxV, std::string str): TopAlg(),
 								_tol(tol),
 								_maxV(maxV)
 {
+
   //load the image
   image.load(str.c_str());
   
@@ -37,11 +38,9 @@ Algorithm::Algorithm(double tol, double maxV, std::string str): TopAlg(),
 }
 
 
-//**************************************//	
-// 		Set the boundaries				//
-//**************************************//
 void Algorithm::setBoundary()
 {
+
   // set the boundaries from an image file
 	for (int y=0 ; y<_dimx ; y++){
 		for (int x=0 ; x<_dimy ; x++){
@@ -63,10 +62,7 @@ void Algorithm::setBoundary()
 			}
 		}
 	}
- }
-
-
-
+}
 
 //**************************************//	
 // 		Executes the algorithm			//
@@ -84,7 +80,7 @@ void Algorithm::runAlgorithm(){
 			    _PMesh.getV(i,j-1))/4;
 			_SMesh.setV(tempvalue,i,j);
       }
-      setEdges(i,j);
+ 	setEdges(i,j);
     }
   }
 
@@ -106,8 +102,7 @@ void Algorithm::runAlgorithm(){
 						_SMesh.getV(i,j-1)));
 		  _SMesh.setV(tempvalue,i,j);
 		}
-		//set edges eql to neighbour
-		setEdges(i,j);	
+		setEdges(i,j);
       }
     }
     calcError();
@@ -153,12 +148,13 @@ double Algorithm::ORP(){
 
 
 //PRINT SOLUTIONS
+// prints to a text file for different situations
 void Algorithm::printSolution()
 {
-  std::ofstream file;
-  file.open("numerical.txt");
-  file << _PMesh; //print mesh to file
-  file.close();
+	  std::ofstream file;
+	  file.open("numerical.txt");
+	  file << _PMesh; //print mesh to file
+	  file.close();
 }
 
 //SET EDGES TO MAKE IT SIMILAR TO THE ANALYTICAL CASE
@@ -168,31 +164,43 @@ void Algorithm::setEdges(int i,int j)
 			// if they have a plate, then leave it alone. If not,
 			// set it equal to the neighbourh value in order to eliminate
 			// the zeros. This is for all four boundaries
-			
-			double tempvalue = _SMesh.getV(1,j-1);
-				_SMesh.setV(tempvalue,0,j-1);
+				double tempvalue;
+				if ( !_SMesh.getisBoundary(0,j) ){
+					tempvalue = _SMesh.getV(1,j);
+					_SMesh.setV(tempvalue,0,j);}
 				//end value
- 				tempvalue = _SMesh.getV(1,_dimy-1);
-				_SMesh.setV(tempvalue,0,_dimy-1);
-				
-				 tempvalue = _SMesh.getV(_dimx-2,j-1);
-				_SMesh.setV(tempvalue,_dimx-1,j-1);
+				if ( !_SMesh.getisBoundary(0,0) ){
+	 				tempvalue = _SMesh.getV(1,0);
+					_SMesh.setV(tempvalue,0,0);
+				}
+				if ( !_SMesh.getisBoundary(_dimx-1,j) ){				
+					 tempvalue = _SMesh.getV(_dimx-2,j);
+					_SMesh.setV(tempvalue,_dimx-1,j);
+				}
+				if ( !_SMesh.getisBoundary(_dimx-1,0) ){				
 				//end value
- 				tempvalue = _SMesh.getV(_dimx-2,_dimy-1);
-				_SMesh.setV(tempvalue,_dimx-1,_dimy-1);
-				
-				 tempvalue = _SMesh.getV(i-1,1);
-				_SMesh.setV(tempvalue,i-1,0);
+	 				tempvalue = _SMesh.getV(_dimx-2,0);
+					_SMesh.setV(tempvalue,_dimx-1,0);
+				}
+				if ( !_SMesh.getisBoundary(i,0) ){				
+					 tempvalue = _SMesh.getV(i,1);
+					_SMesh.setV(tempvalue,i,0);
+				}
+				if ( !_SMesh.getisBoundary(0,0) ){			
 				//end value
- 				tempvalue = _SMesh.getV(_dimx-1,1);
-				_SMesh.setV(tempvalue,_dimx-1,0);
-						
-				 tempvalue = _SMesh.getV(i-1,_dimy-2);
-				_SMesh.setV(tempvalue,i-1,_dimy-1);
+	 				tempvalue = _SMesh.getV(0,1);
+					_SMesh.setV(tempvalue,0,0);
+				}
+				if ( !_SMesh.getisBoundary(i,_dimy-1) ){						
+					 tempvalue = _SMesh.getV(i,_dimy-2);
+					_SMesh.setV(tempvalue,i,_dimy-1);
+				}
 				//end value
- 				tempvalue = _SMesh.getV(_dimx-1,_dimy-2);
-				_SMesh.setV(tempvalue,_dimx-1,_dimy-1);
-}
+				if ( !_SMesh.getisBoundary(0,_dimy-1) ){
+	 				tempvalue = _SMesh.getV(0,_dimy-2);
+					_SMesh.setV(tempvalue,0,_dimy-1);
+				}
+}	
 
 
 

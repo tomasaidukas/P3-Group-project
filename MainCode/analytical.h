@@ -20,7 +20,6 @@ class Analytic : public TopAlg{
   Analytic(int dimx, int dimy);
   ~Analytic();
   
- //void runNumerical();
   void runAlgorithm();
   // void printSolution();
 };

@@ -47,56 +47,7 @@ void Analytic::runAlgorithm()
 }
 
 
-//**************************************//	
-// 		Executes the algorithm			//
-//**************************************//
-/*
-void Analytic::runNumerical(){
-  
-  double tempvalue;
-  // 		Solution one iteration ahead
-  //	 	using the Jacobi method	
-  for (int i = 1 ; i<_dimx-1 ; i++){
-    for (int j = 1 ; j<_dimy-1 ; j++){
-      if (!_PMesh.getisBoundary(i,j)){
-			double tempvalue = (_PMesh.getV(i+1,j) + 
-			    _PMesh.getV(i-1,j) + 
-			    _PMesh.getV(i,j+1) + 
-			    _PMesh.getV(i,j-1))/4;
-			_SMesh.setV(tempvalue,i,j);
-      }
-      setEdges(i,j);
-    }
-  }
 
-  //	Over-relaxation algorithm
-  // While the error is bigger than the tolerated one
-  // carry on with approximating the solution further
-  // until it is reached.
-  calcError();
-  //calculate the error between two meshes
-  while (_err > _tol){
-    //main algorithm
-    for (int i = 1 ; i<_dimx-1 ; i++){
-      for (int j = 1 ; j<_dimy-1 ; j++){
-		if (!_SMesh.getisBoundary(i,j)){
-		  double tempvalue = ((1-_orp)*_PMesh.getV(i,j) + 
-					  (_orp/4)*(_PMesh.getV(i+1,j) + 
-						_SMesh.getV(i-1,j) + 
-						_PMesh.getV(i,j+1) + 
-						_SMesh.getV(i,j-1)));
-		  _SMesh.setV(tempvalue,i,j);
-		}
-		//set edges eql to neighbour
-		setEdges(i,j);	
-      }
-    }
-    calcError();
-    // Set old potential = new potential
-    _PMesh = _SMesh;
-  }
-}
-*/
 
 //print solution
 //void Analytic::printSolution(){}

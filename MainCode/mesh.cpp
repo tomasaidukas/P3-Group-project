@@ -140,7 +140,6 @@ int Mesh::getDimY(){
 
 //FRIEND FUNCTIONS
 std::ostream& operator<<(std::ostream& out, const Mesh& mesh)
-/*
 {
   for (int i=0; i<mesh._dimx; i++){
     for (int j=0; j<mesh._dimy; j++){
@@ -151,13 +150,13 @@ std::ostream& operator<<(std::ostream& out, const Mesh& mesh)
     }
     out << std::endl;
   }
-}*/
+}
 
 //needed format for ROOT
-{
+/*{
  for (int i=0; i<mesh._dimx; i++){
     for (int j=0; j<mesh._dimy; j++){
    		out << i << " " << j << " " << mesh.matrix[i][j].V << std::endl;
   		}	
 	}
-}
+}*/
