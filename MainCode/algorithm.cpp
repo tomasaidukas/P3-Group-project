@@ -109,8 +109,6 @@ void Algorithm::runAlgorithm(){
     // Set old potential = new potential
     _PMesh = _SMesh;
   }
-  //	Put the mesh values to a data file
-  _PMesh.PotentialData();
 }
 
 
