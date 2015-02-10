@@ -27,7 +27,7 @@ typedef struct{
 class Mesh{
  private:
   meshpoint **matrix;     //array of meshpoints
-  int mn_dimX, mn_dimY;    //dimensions of array
+  int _dimx, _dimy;    //dimensions of array
  
 public:
   Mesh();			//default constructor
