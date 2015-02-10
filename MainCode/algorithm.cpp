@@ -4,7 +4,9 @@
 //**************************************//	
 //	 		CONSTRUCTOR 				//
 //**************************************//
-Algorithm::Algorithm(double tol, double maxV, std::string str):_tol(tol),_maxV(maxV)
+Algorithm::Algorithm(double tol, double maxV, std::string str): TopAlg(),
+								_tol(tol),
+								_maxV(maxV)
 {
   //load the image
   image.load(str.c_str());
