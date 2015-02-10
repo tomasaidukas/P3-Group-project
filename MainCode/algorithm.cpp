@@ -14,11 +14,12 @@ Algorithm::Algorithm(double tol, double maxV, std::string str):_tol(tol),_maxV(m
   _dimy = image.width();
   
   //allocate dimensions to new arrays
-  _PMesh.Allocate(_dimx,_dimy);
-  _SMesh.Allocate(_dimx,_dimy);
+  _PMesh = Mesh(_dimx, _dimy);
+  _SMesh = Mesh(_dimx, _dimy);
 
   //set all values to zero initialy
   _PMesh.setAllZero();
+  _SMesh.setAllZero();
   
   //set the boundaries  
   setBoundary();
@@ -30,8 +31,7 @@ Algorithm::Algorithm(double tol, double maxV, std::string str):_tol(tol),_maxV(m
   //counter to see total number of iterations
   _iter = 0;
   
-  //set the same boundary conditions on temp mesh as well
-  _PMesh.setEqual(_SMesh);
+  _SMesh = _PMesh;
 }
 
 
