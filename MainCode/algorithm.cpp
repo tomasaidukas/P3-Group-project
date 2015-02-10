@@ -84,6 +84,7 @@ void Algorithm::runAlgorithm(){
 			    _PMesh.getV(i,j-1))/4;
 			_SMesh.setV(tempvalue,i,j);
       }
+      setEdges(i,j);
     }
   }
 
@@ -126,8 +127,8 @@ double Algorithm::calcError(){
 	//largest difference value
 	double difference;
 	_err=0;
-	for (int X = 0 ; X<_dimx-1 ; X++){
-		for (int Y = 0 ; Y<_dimy-1 ; Y++){
+	for (int X = 0 ; X<_dimx ; X++){
+		for (int Y = 0 ; Y<_dimy ; Y++){
 			difference = fabs(_SMesh.getV(X,Y) - _PMesh.getV(X,Y));
 			//find the largest difference value
 			if (_err < difference){
@@ -160,6 +161,7 @@ void Algorithm::printSolution()
   file.close();
 }
 
+//SET EDGES TO MAKE IT SIMILAR TO THE ANALYTICAL CASE
 void Algorithm::setEdges(int i,int j)
 {
 			// Check whether the boundaries of the mesh have a plate or not
