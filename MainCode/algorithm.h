@@ -21,7 +21,6 @@ class Algorithm{
   double _tol; //maximum error tolerance
   double _orp; //over-relaxaion parameter
   int _iter; //counts the number of iterations taken
-
   CImg<unsigned char> image;
 
   //private member functions
@@ -31,11 +30,11 @@ class Algorithm{
 
   
   public:
-  
   Algorithm(double,double, std::string);     //constructor
   ~Algorithm();    //destructor
+
   void runAlgorithm(); //runs the main algorithm
-  
+  void printSolution(); //prints mesh
   };
   
   #endif

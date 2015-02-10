@@ -149,5 +149,17 @@ double Algorithm::ORP(){
 
 
 
+//PRINT SOLUTIONS
+void Algorithm::printSolution()
+{
+  std::ofstream file;
+  file.open("Potential_Values.txt");
+  file << _PMesh; //print mesh to file
+  file.close();
+}
+
+
+
+
 
 Algorithm::~Algorithm(){}
