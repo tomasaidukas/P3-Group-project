@@ -14,7 +14,6 @@ using namespace cimg_library;
 
 class Algorithm: public TopAlg{
  private:
-  Mesh _SMesh; //Secondary Mesh
   double _maxV; //maximum potential
   double _err; //eror
   double _tol; //maximum error tolerance

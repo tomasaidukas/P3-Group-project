@@ -20,6 +20,8 @@ int main(){
   Analytic ana_alg(50,50);
   ana_alg.runAlgorithm();
   ana_alg.printSolution();
+  ana_alg.runNumerical();
+  ana_alg.printSolution();
 
   ana_alg.difference(algorithm);
   return 0;

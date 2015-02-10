@@ -21,7 +21,7 @@ class Analytic : public TopAlg{
   ~Analytic();
   
   void runAlgorithm();
-  // void printSolution();
+  //void runNumerical();
 };
 
 #endif

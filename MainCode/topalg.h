@@ -13,6 +13,7 @@ class TopAlg{
  protected:
   int _dimx, _dimy;
   Mesh _PMesh;
+  Mesh _SMesh;
 
   //private member functions
   virtual void setBoundary();
@@ -24,7 +25,9 @@ class TopAlg{
   void difference(TopAlg& other);
   virtual void runAlgorithm();
   virtual void printSolution();
-  
+  virtual void setEdges(int,int);
+  virtual void ORP();
+  virtual void calcError();
 
 };
 
