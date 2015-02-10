@@ -13,22 +13,21 @@ void TopAlg::runAlgorithm(){}
 void TopAlg::printSolution()
 {
   std::ofstream file;
-  file.open("Potential_Values.txt");
+  file.open("solution.txt");
   file << _PMesh;
   file.close();
 }
 
 
 
-/*
-BROKEN
+
 void TopAlg::difference(TopAlg& other)
 {
   if (_dimx != other._dimx || _dimy != other._dimy){ 
     std::cout << "array size mismatch\n";
     return;
   }
-  
+
   Mesh diffmesh = Mesh(_dimx, _dimy);
   for (int i=0; i<_dimx; i++){
     for (int j=0; j<_dimy; j++){
@@ -42,4 +41,3 @@ void TopAlg::difference(TopAlg& other)
   file << diffmesh;
   file.close();
 }
-*/
