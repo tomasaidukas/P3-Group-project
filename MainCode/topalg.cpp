@@ -13,7 +13,7 @@ void TopAlg::runAlgorithm(){}
 void TopAlg::printSolution()
 {
   std::ofstream file;
-  file.open("solution.txt");
+  file.open("Potential_Values.txt");
   file << _PMesh;
   file.close();
 }

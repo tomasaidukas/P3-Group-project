@@ -143,7 +143,10 @@ std::ostream& operator<<(std::ostream& out, const Mesh& mesh)
 {
   for (int i=0; i<mesh._dimx; i++){
     for (int j=0; j<mesh._dimy; j++){
-      out << mesh.matrix[i][j].V << " ";
+    	if (j==mesh._dimy-1){
+    		out << mesh.matrix[i][j].V;
+    	}else{out << mesh.matrix[i][j].V << " ";
+    	}
     }
     out << std::endl;
   }
