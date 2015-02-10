@@ -38,9 +38,7 @@ public:
   //mutator functions
   void setV(double, int, int);
   void setisBoundary(bool, int, int);
-  void Allocate(int, int);
   void setAllZero(); //set all array values to 0
-  void setEqual(Mesh&); //makes the arrays equal
   Mesh& operator=(const Mesh&); //assignment operator
 
   //accesssor functions

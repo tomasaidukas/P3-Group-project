@@ -44,19 +44,6 @@ Mesh::Mesh(const Mesh& tempmesh): _dimx(tempmesh._dimx),
   }
 }
 
-//Alocate dimensions to a mesh
-void Mesh::Allocate(int n_dimX, int n_dimY){
-
-  _dimx = n_dimX;
-  _dimy = n_dimY;
-  //allocate memory for x array
-  matrix = new meshpoint*[n_dimX];
-
-  //allocate memory for y arrays
-  for (int i=0; i<n_dimX; i++){
-    matrix[i] = new meshpoint[n_dimY];
-  }
-}
 
 
 //ASSIGNMENT OPERATOR OVERLOAD
@@ -129,13 +116,6 @@ void Mesh::setAllZero(){
 	
 }
 
-void Mesh::setEqual(Mesh& tempmesh){
-	for (int X = 1 ; X<_dimx-1 ; X++){
-		for (int Y = 1 ; Y<_dimy-1 ; Y++){
-			matrix[X][Y].V = tempmesh.matrix[X][Y].V;	
-		}
-	}
-}
 
 
 //ACCESSOR FUNCTIONS
