@@ -35,7 +35,7 @@ void Analytic::runAlgorithm()
       if (r<=_radius){continue;}
       double costheta = (i-25)/r;
       
-      double tempval = ((-_E0/50) *
+      double tempval = (-_E0 *
 			( r - (pow(_radius,2)/r)) * costheta);
       _PMesh.setV(tempval, i, j);
     }
