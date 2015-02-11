@@ -123,6 +123,10 @@ double Mesh::getV(int i, int j)
 {
   return matrix[i][j].V;
 }
+void getSize(){
+  std::cout << sizeof( meshpoint ) << std::endl; /* y size */ 
+   std::cout << sizeof( meshpoint[0] ) << std::endl; /* x size */
+}
 
 bool Mesh::getisBoundary(int i, int j)
 {

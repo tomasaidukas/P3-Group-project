@@ -4,8 +4,6 @@
 #define ANALYTIC_H
 
 #include "topalg.h"
-#include<math.h>
-#include<iostream>
 
 class Analytic : public TopAlg{
  private:
@@ -13,15 +11,14 @@ class Analytic : public TopAlg{
   double _V;   //potential between plates
   double _L; //distance between plates
 
-  void setBoundary();
-
  public:
   Analytic();
   Analytic(int dimx, int dimy);
   ~Analytic();
   
+  void setBoundary();
   void runAlgorithm();
-  //void runNumerical();
+  void runNumerical();
 };
 
 #endif

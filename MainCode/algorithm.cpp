@@ -29,8 +29,7 @@ Algorithm::Algorithm(double tol, double maxV, std::string str): TopAlg(),
   
   //calculate the over-relaxation parameter
   //which depends on the array size
-  ORP();
-  
+  _orp = TopAlg::ORP();
   //counter to see total number of iterations
   _iter = 0;
   
@@ -80,7 +79,7 @@ void Algorithm::runAlgorithm(){
 			    _PMesh.getV(i,j-1))/4;
 			_SMesh.setV(tempvalue,i,j);
       }
- 	setEdges(i,j);
+ 	TopAlg::setEdges(i,j);
     }
   }
 
@@ -88,7 +87,7 @@ void Algorithm::runAlgorithm(){
   // While the error is bigger than the tolerated one
   // carry on with approximating the solution further
   // until it is reached.
-  calcError();
+  TopAlg::calcError();
   //calculate the error between two meshes
   while (_err > _tol){
     //main algorithm
@@ -102,107 +101,13 @@ void Algorithm::runAlgorithm(){
 						_SMesh.getV(i,j-1)));
 		  _SMesh.setV(tempvalue,i,j);
 		}
-		setEdges(i,j);
+		TopAlg::setEdges(i,j);
       }
     }
-    calcError();
+    TopAlg::calcError();
     // Set old potential = new potential
     _PMesh = _SMesh;
   }
 }
-
-
-
-
-//**************************************//	
-//	Calculates the error for the ORM	//
-//**************************************//
-double Algorithm::calcError(){
-
-	//largest difference value
-	double difference;
-	_err=0;
-	for (int X = 0 ; X<_dimx ; X++){
-		for (int Y = 0 ; Y<_dimy ; Y++){
-			difference = fabs(_SMesh.getV(X,Y) - _PMesh.getV(X,Y));
-			//find the largest difference value
-			if (_err < difference){
-				_err = difference;
-			}
-		}
-	}
-	//finds the number of iterations at the end
-	_iter++;
-	return _err;
-}
-
-//******************************************//	
-//	Calculates the over-relaxation parameter//
-//******************************************//
-double Algorithm::ORP(){
-	double T=cos(PI/_dimx) + cos(PI/_dimy);
-	_orp = ( (8-sqrt(64-16*pow(T,2))) / pow(T,2));
-	return _orp;
-}
-
-
-
-//PRINT SOLUTIONS
-// prints to a text file for different situations
-void Algorithm::printSolution()
-{
-	  std::ofstream file;
-	  file.open("numerical.txt");
-	  file << _PMesh; //print mesh to file
-	  file.close();
-}
-
-//SET EDGES TO MAKE IT SIMILAR TO THE ANALYTICAL CASE
-void Algorithm::setEdges(int i,int j)
-{
-			// Check whether the boundaries of the mesh have a plate or not
-			// if they have a plate, then leave it alone. If not,
-			// set it equal to the neighbourh value in order to eliminate
-			// the zeros. This is for all four boundaries
-				double tempvalue;
-				if ( !_SMesh.getisBoundary(0,j) ){
-					tempvalue = _SMesh.getV(1,j);
-					_SMesh.setV(tempvalue,0,j);}
-				//end value
-				if ( !_SMesh.getisBoundary(0,0) ){
-	 				tempvalue = _SMesh.getV(1,0);
-					_SMesh.setV(tempvalue,0,0);
-				}
-				if ( !_SMesh.getisBoundary(_dimx-1,j) ){				
-					 tempvalue = _SMesh.getV(_dimx-2,j);
-					_SMesh.setV(tempvalue,_dimx-1,j);
-				}
-				if ( !_SMesh.getisBoundary(_dimx-1,0) ){				
-				//end value
-	 				tempvalue = _SMesh.getV(_dimx-2,0);
-					_SMesh.setV(tempvalue,_dimx-1,0);
-				}
-				if ( !_SMesh.getisBoundary(i,0) ){				
-					 tempvalue = _SMesh.getV(i,1);
-					_SMesh.setV(tempvalue,i,0);
-				}
-				if ( !_SMesh.getisBoundary(0,0) ){			
-				//end value
-	 				tempvalue = _SMesh.getV(0,1);
-					_SMesh.setV(tempvalue,0,0);
-				}
-				if ( !_SMesh.getisBoundary(i,_dimy-1) ){						
-					 tempvalue = _SMesh.getV(i,_dimy-2);
-					_SMesh.setV(tempvalue,i,_dimy-1);
-				}
-				//end value
-				if ( !_SMesh.getisBoundary(0,_dimy-1) ){
-	 				tempvalue = _SMesh.getV(0,_dimy-2);
-					_SMesh.setV(tempvalue,0,_dimy-1);
-				}
-}	
-
-
-
 
 Algorithm::~Algorithm(){}
