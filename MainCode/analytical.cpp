@@ -34,18 +34,23 @@ void Analytic::setBoundary()
 
   double r;
   	// Boundary conditions for the parallel plates
-	for (int Y = 0 ; Y<_dimy ; Y++){
-		_PMesh.setV(-_V/2,Y,0);
-		_PMesh.setisBoundary(true,Y,0);
-		_PMesh.setV(_V/2,Y,_dimx-1);
-		_PMesh.setisBoundary(true,Y,_dimx-1);
+	for (int X = 0 ; X<_dimx ; X++){
+		_PMesh.setV(-_V/2,X,0);
+		_PMesh.setisBoundary(true,X,0);
+		_SMesh.setisBoundary(true,X,0);
+		_PMesh.setV(_V/2,X,_dimy-1);
+		_PMesh.setisBoundary(true,X,_dimy-1);
+		_SMesh.setisBoundary(true,X,_dimy-1);
 	}
 	
 	//insert a circle in the middle
   	for (int i = 0 ; i<_dimx ; i++){
   	  for (int j = 0 ; j<_dimy ; j++){
 			 r = sqrt(pow(i-_L/2,2) + pow(j-_L/2,2));
-  		    if (r<=_radius){_PMesh.setisBoundary(true,i,j);}
+  		    if (r<=_radius){
+  		    	_PMesh.setisBoundary(true,i,j);
+  		    	_SMesh.setisBoundary(true,i,j);
+  		    }
   	  }
     }
   		    
@@ -114,7 +119,7 @@ void Analytic::runNumerical()
     }
     
     // Set old potential = new potential
-    TopAlg::calcError();
+    std::cout << TopAlg::calcError() << std::endl;
     _PMesh = _SMesh;
   }
 }
