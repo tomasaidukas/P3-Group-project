@@ -61,6 +61,7 @@ void Algorithm::setBoundary()
 			}
 		}
 	}
+	
 }
 
 //**************************************//	
@@ -93,15 +94,15 @@ void Algorithm::runAlgorithm(){
     //main algorithm
     for (int i = 1 ; i<_dimx-1 ; i++){
       for (int j = 1 ; j<_dimy-1 ; j++){
-		if (!_SMesh.getisBoundary(i,j)){
-		  double tempvalue = ((1-_orp)*_PMesh.getV(i,j) + 
-					  (_orp/4)*(_PMesh.getV(i+1,j) + 
-						_SMesh.getV(i-1,j) + 
-						_PMesh.getV(i,j+1) + 
-						_SMesh.getV(i,j-1)));
-		  _SMesh.setV(tempvalue,i,j);
-		}
-		TopAlg::setEdges(i,j);
+				if (!_SMesh.getisBoundary(i,j)){
+					double tempvalue = ((1-_orp)*_PMesh.getV(i,j) + 
+								(_orp/4)*(_PMesh.getV(i+1,j) + 
+								_SMesh.getV(i-1,j) + 
+								_PMesh.getV(i,j+1) + 
+								_SMesh.getV(i,j-1)));
+					_SMesh.setV(tempvalue,i,j);
+				}
+				TopAlg::setEdges(i,j);
       }
     }
     TopAlg::calcError();

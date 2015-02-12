@@ -21,6 +21,7 @@ Analytic::Analytic(int dimx, int dimy): TopAlg()
 //destructor
 Analytic::~Analytic(){}
 
+
 //set boundary conditions
 void Analytic::setBoundary()
 {
@@ -34,27 +35,27 @@ void Analytic::setBoundary()
 
   double r;
   	// Boundary conditions for the parallel plates
-	for (int X = 0 ; X<_dimx ; X++){
-		_PMesh.setV(-_V/2,X,0);
-		_PMesh.setisBoundary(true,X,0);
-		_SMesh.setisBoundary(true,X,0);
-		_PMesh.setV(_V/2,X,_dimy-1);
-		_PMesh.setisBoundary(true,X,_dimy-1);
-		_SMesh.setisBoundary(true,X,_dimy-1);
+	for (int j = 0 ; j<_dimy ; j++){
+		_PMesh.setV(_V/2,0,j);
+		_SMesh.setV(_V/2,0,j);
+		_PMesh.setisBoundary(true,0,j);
+		_SMesh.setisBoundary(true,0,j);
+		_PMesh.setV(-_V/2,_dimy-1,j);
+		_SMesh.setV(-_V/2,_dimy-1,j);		
+		_PMesh.setisBoundary(true,_dimy-1,j);
+		_SMesh.setisBoundary(true,_dimy-1,j);
 	}
 	
 	//insert a circle in the middle
   	for (int i = 0 ; i<_dimx ; i++){
   	  for (int j = 0 ; j<_dimy ; j++){
-			 r = sqrt(pow(i-_L/2,2) + pow(j-_L/2,2));
-  		    if (r<=_radius){
+			 r = pow(i-_L/2,2) + pow(j-_L/2,2);
+  		    if (pow(r,2)<=pow(_radius,2)){
   		    	_PMesh.setisBoundary(true,i,j);
   		    	_SMesh.setisBoundary(true,i,j);
   		    }
   	  }
     }
-  		    
-	_SMesh = _PMesh;
 	
 }
 
@@ -78,48 +79,49 @@ void Analytic::runAlgorithm()
 
 
 
+
 // calculate the numerical solution using the parameter used in the 
 // analytical solution
-void Analytic::runNumerical()
-{
-   double tempvalue;
+void Analytic::runNumerical(){
+	double tempvalue;
   // 		Solution one iteration ahead
   //	 	using the Jacobi method	
   for (int i = 1 ; i<_dimx-1 ; i++){
     for (int j = 1 ; j<_dimy-1 ; j++){
-			if (!_PMesh.getisBoundary(i,j)){
-				double tempvalue = (_PMesh.getV(i+1,j) + 
+      if (!_PMesh.getisBoundary(i,j)){
+			double tempvalue = (_PMesh.getV(i+1,j) + 
 			    _PMesh.getV(i-1,j) + 
 			    _PMesh.getV(i,j+1) + 
 			    _PMesh.getV(i,j-1))/4;
-				_SMesh.setV(tempvalue,i,j);	
- 			}
- 	  	TopAlg::setEdges(i,j);
+			_SMesh.setV(tempvalue,i,j);
+      }
+ 		TopAlg::setEdges(i,j);
     }
   }
+
   //	Over-relaxation algorithm
   // While the error is bigger than the tolerated one
   // carry on with approximating the solution further
   // until it is reached.
+  TopAlg::calcError();
   //calculate the error between two meshes
   while (_err > _tol){
     //main algorithm
     for (int i = 1 ; i<_dimx-1 ; i++){
       for (int j = 1 ; j<_dimy-1 ; j++){
-				if (!_PMesh.getisBoundary(i,j)){
-		  		double tempvalue = ((1-_orp)*_PMesh.getV(i,j) + 
-					  (_orp/4)*(_PMesh.getV(i+1,j) + 
-						_SMesh.getV(i-1,j) + 
-						_PMesh.getV(i,j+1) + 
-						_SMesh.getV(i,j-1)));
-		 			 _SMesh.setV(tempvalue,i,j);
-		 		}
+				if (!_SMesh.getisBoundary(i,j)){
+					double tempvalue = ((1-_orp)*_PMesh.getV(i,j) + 
+								(_orp/4)*(_PMesh.getV(i+1,j) + 
+								_SMesh.getV(i-1,j) + 
+								_PMesh.getV(i,j+1) + 
+								_SMesh.getV(i,j-1)));
+					_SMesh.setV(tempvalue,i,j);
+				}
 				TopAlg::setEdges(i,j);
       }
     }
-    
+    TopAlg::calcError();
     // Set old potential = new potential
-    std::cout << TopAlg::calcError() << std::endl;
     _PMesh = _SMesh;
   }
 }
