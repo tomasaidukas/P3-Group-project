@@ -10,7 +10,7 @@
 #include "mesh.h"
 #include "CImg.h"
 #include <cstring>
-#define PI  3.141592
+#define PI 3.141592
 
 class TopAlg{
  protected:

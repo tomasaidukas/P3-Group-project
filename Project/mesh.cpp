@@ -164,9 +164,8 @@ void Mesh::PotentialData(){
 	potentialData.open ("Potential_Values.txt");
 	
 	for (int X = 0 ; X<mn_dimX ; X++){
-		potentialData << std::endl;
 		for (int Y = 0 ; Y<mn_dimY ; Y++){
-			potentialData << matrix[X][Y].V << " " ;
+			potentialData << X << " " <<  Y << " " << matrix[X][Y].V << std::endl;
 			
 		}
 	}

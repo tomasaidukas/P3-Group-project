@@ -9,7 +9,7 @@
 #ifndef MESH_H
 #define MESH_H
 
-#include"topalg.h"
+#include <iostream>
 
 //This defines a new type which contains the electric potential
 //and whether or not the point is a boundary condition.
