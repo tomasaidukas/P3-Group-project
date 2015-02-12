@@ -74,8 +74,10 @@ void TopAlg::ratio(TopAlg& other)
   Mesh diffmesh = Mesh(_dimx, _dimy);
   for (int i=0; i<_dimx; i++){
     for (int j=0; j<_dimy; j++){
-      double diff = _PMesh.getV(i,j) / other._PMesh.getV(i,j);
-      diffmesh.setV(diff,i,j);
+    	if (!other._PMesh.getisBoundary(i,j)){
+	      double diff = fabs(_PMesh.getV(i,j) / other._PMesh.getV(i,j));
+  	    diffmesh.setV(diff,i,j);
+  	  }
     }
   }
 
