@@ -79,7 +79,7 @@ void Algorithm::runAlgorithm(){
 			    _PMesh.getV(i,j-1))/4;
 			_SMesh.setV(tempvalue,i,j);
       }
- 	TopAlg::setEdges(i,j);
+ 		TopAlg::setEdges(i,j);
     }
   }
 

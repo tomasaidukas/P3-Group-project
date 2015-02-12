@@ -13,8 +13,8 @@ class Analytic : public TopAlg{
 
  public:
   Analytic();
-  Analytic(int dimx, int dimy);
-  ~Analytic();
+  Analytic(int dimx, int dimy); //constructor
+  ~Analytic(); //destructor
   
   void setBoundary();
   void runAlgorithm();

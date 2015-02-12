@@ -102,41 +102,73 @@ void TopAlg::setEdges(int i,int j)
 			// if they have a plate, then leave it alone. If not,
 			// set it equal to the neighbourh value in order to eliminate
 			// the zeros. This is for all four boundaries
+			
+			//j and i go from 1 to dim-2 in the main algorithm
+			//we want them to go from 0 to dim-1
+			//hence, we add 0 and dim-1 separately
 				double tempvalue;
+				
+				
+				// THE EDGE AT X=0 THROUGH ALL Y VALUES
 				if ( !_SMesh.getisBoundary(0,j) ){
 					tempvalue = _SMesh.getV(1,j);
 					_SMesh.setV(tempvalue,0,j);}
-				//end value
+				
 				if ( !_SMesh.getisBoundary(0,0) ){
 	 				tempvalue = _SMesh.getV(1,0);
 					_SMesh.setV(tempvalue,0,0);
 				}
+				if ( !_SMesh.getisBoundary(0,_dimy-1) ){
+	 				tempvalue = _SMesh.getV(1,_dimy-1);
+					_SMesh.setV(tempvalue,0,_dimy-1);
+				}
+				
+				
+				// THE EDGE AT X=_dimx-1 THROUGH ALL Y VALUES
 				if ( !_SMesh.getisBoundary(_dimx-1,j) ){				
 					 tempvalue = _SMesh.getV(_dimx-2,j);
 					_SMesh.setV(tempvalue,_dimx-1,j);
 				}
+				//ADD THE ENDS
 				if ( !_SMesh.getisBoundary(_dimx-1,0) ){				
-				//end value
 	 				tempvalue = _SMesh.getV(_dimx-2,0);
 					_SMesh.setV(tempvalue,_dimx-1,0);
 				}
-				if ( !_SMesh.getisBoundary(i,0) ){				
+				if ( !_SMesh.getisBoundary(_dimx-1,_dimy-1) ){				
+	 				tempvalue = _SMesh.getV(_dimx-2,_dimy-1);
+					_SMesh.setV(tempvalue,_dimx-1,_dimy-1);
+				}
+				
+				
+				
+				// THE EDGE AT Y=0 THROUGH ALL X VALUES
+				if ( !_SMesh.getisBoundary(i,0) ){						
 					 tempvalue = _SMesh.getV(i,1);
 					_SMesh.setV(tempvalue,i,0);
 				}
+				//ADD THE ENDS
 				if ( !_SMesh.getisBoundary(0,0) ){			
-				//end value
 	 				tempvalue = _SMesh.getV(0,1);
 					_SMesh.setV(tempvalue,0,0);
 				}
+				if ( !_SMesh.getisBoundary(_dimx-1,0) ){			
+	 				tempvalue = _SMesh.getV(_dimx-1,1);
+					_SMesh.setV(tempvalue,_dimx-1,0);
+				}
+				
+				// THE EDGE AT Y=_dimy-1 THROUGH ALL X VALUES
 				if ( !_SMesh.getisBoundary(i,_dimy-1) ){						
 					 tempvalue = _SMesh.getV(i,_dimy-2);
 					_SMesh.setV(tempvalue,i,_dimy-1);
 				}
-				//end value
+				//ADD THE ENDS
 				if ( !_SMesh.getisBoundary(0,_dimy-1) ){
 	 				tempvalue = _SMesh.getV(0,_dimy-2);
 					_SMesh.setV(tempvalue,0,_dimy-1);
+				}
+				if ( !_SMesh.getisBoundary(_dimx-1,_dimy-1) ){
+	 				tempvalue = _SMesh.getV(_dimx-1,_dimy-2);
+					_SMesh.setV(tempvalue,_dimx-1,_dimy-1);
 				}
 }	
 
