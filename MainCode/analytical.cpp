@@ -43,7 +43,7 @@ void Analytic::setBoundary()
 	
 	//insert a circle in the middle
   	for (int i = 0 ; i<_dimx ; i++){
-  	  for (int j = 1 ; j<_dimy ; j++){
+  	  for (int j = 0 ; j<_dimy ; j++){
 			 r = sqrt(pow(i-_L/2,2) + pow(j-_L/2,2));
   		    if (r<=_radius){_PMesh.setisBoundary(true,i,j);}
   	  }
@@ -80,8 +80,8 @@ void Analytic::runNumerical()
    double tempvalue;
   // 		Solution one iteration ahead
   //	 	using the Jacobi method	
-  for (int i = 1 ; i<_dimx ; i++){
-    for (int j = 1 ; j<_dimy ; j++){
+  for (int i = 1 ; i<_dimx-1 ; i++){
+    for (int j = 1 ; j<_dimy-1 ; j++){
 			if (!_PMesh.getisBoundary(i,j)){
 				double tempvalue = (_PMesh.getV(i+1,j) + 
 			    _PMesh.getV(i-1,j) + 
@@ -99,8 +99,8 @@ void Analytic::runNumerical()
   //calculate the error between two meshes
   while (_err > _tol){
     //main algorithm
-    for (int i = 1 ; i<_dimx ; i++){
-      for (int j = 1 ; j<_dimy ; j++){
+    for (int i = 1 ; i<_dimx-1 ; i++){
+      for (int j = 1 ; j<_dimy-1 ; j++){
 				if (!_PMesh.getisBoundary(i,j)){
 		  		double tempvalue = ((1-_orp)*_PMesh.getV(i,j) + 
 					  (_orp/4)*(_PMesh.getV(i+1,j) + 

@@ -40,6 +40,7 @@ void TopAlg::printSolution(int i)
 	  
 }
 
+//takes the difference between the two plots
 void TopAlg::difference(TopAlg& other)
 {
   if (_dimx != other._dimx || _dimy != other._dimy){ 
@@ -57,6 +58,29 @@ void TopAlg::difference(TopAlg& other)
 
   std::ofstream file;
   file.open("difference.txt");
+  file << diffmesh;
+  file.close();
+  
+}
+
+//takes the ratio between the two plots
+void TopAlg::ratio(TopAlg& other)
+{
+  if (_dimx != other._dimx || _dimy != other._dimy){ 
+    std::cout << "array size mismatch\n";
+  }
+
+  
+  Mesh diffmesh = Mesh(_dimx, _dimy);
+  for (int i=0; i<_dimx; i++){
+    for (int j=0; j<_dimy; j++){
+      double diff = _PMesh.getV(i,j) / other._PMesh.getV(i,j);
+      diffmesh.setV(diff,i,j);
+    }
+  }
+
+  std::ofstream file;
+  file.open("ratio.txt");
   file << diffmesh;
   file.close();
   

@@ -2,10 +2,10 @@
 CC=g++	
 
 #object files
-obj=main.o mesh.o algorithm.o topalg.o analytical.o
+obj=main.o mesh.o algorithm.o topalg.o analytical.o analyze.o
 
 #header files
-headers=main.h mesh.h algorithm.h topalg.h analytical.h CImg.h
+headers=main.h mesh.h algorithm.h topalg.h analytical.h CImg.h analyze.h
 #libraries
 lib=-L/opt/X11/lib -lX11 -pthread -lm
 

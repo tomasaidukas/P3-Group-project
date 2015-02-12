@@ -30,12 +30,14 @@ class TopAlg{
   ~TopAlg();
   
   void difference(TopAlg& other);
+  void ratio(TopAlg& other);
   virtual void runAlgorithm();
   virtual void runNumerical();
   virtual void setEdges(int,int);
   virtual double calcError();
   virtual double ORP();
   virtual void printSolution(int);
+   
 };
 
 #endif
