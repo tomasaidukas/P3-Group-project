@@ -16,10 +16,4 @@ SO, in the main.cpp three classes are created each executing these three differe
 However! There are some problems:
 
 Problem number 1:
-	The function setEdges() should remove the zeros from the edges by setting them equal to the neighbourh values. If this is not done, then the algorithm "sees" the edges as plates at 0 potential and plots weird results. The plots produced at the moment ar relatively OK (you can see some crap around the edges), but if the plates were plotted not at the top and bottom, but at the sides it would produce poor results. Therefore, someone could check that function and see how it can be fixed. You can also see blank edges in the plots and I believe the problems are due to that. 
-
-	Another solution for the above problem could be solved just by taking away 2 or 3 pixels away from all the edges and not touching them when we calculate the potential.
-	
-Problem number 2:
-	Ovidiu uploaded the code for equipotentials, which requires different format than what we are using now. It would be nice to decide on a standard format used for the output files.
-	
+	The numerical solution for the circle in the middle is kind of working. However, at the bottom of the plot there are some mysterious zero potetial waves and spots. The algorithm used is copied from algorithm.cpp, which works properly. There must be something with the boundary conditions maybe, but they are also seem to be in place. If someone could find the source of that error it would be great. Check the analytical.cpp file.
