@@ -10,15 +10,15 @@ class Analytic : public TopAlg{
   int _radius;  //radius of cylinder
   double _V;   //potential between plates
   double _L; //distance between plates
+  double r;//temporary variable
 
  public:
   Analytic();
-  Analytic(int dimx, int dimy); //constructor
+  Analytic(int, int, double, double, double); //constructor
   ~Analytic(); //destructor
   
   void setBoundary();
-  void runAlgorithm();
-  void runNumerical();
+  void runAnalytical();
 };
 
 #endif

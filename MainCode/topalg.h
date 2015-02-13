@@ -18,21 +18,20 @@ class TopAlg{
   Mesh _PMesh;
   Mesh _SMesh;
   double _orp;
-  double _tol;
   double _err;
+  double _tol;
+  double _maxV;
   double _iter;
   
-  //private member functions
-  virtual void setBoundary();
 
  public:
   TopAlg();
   ~TopAlg();
+
   
   void difference(TopAlg& other);
   void ratio(TopAlg& other);
-  virtual void runAlgorithm();
-  virtual void runNumerical();
+  double runAlgorithm();
   virtual void setEdges(int,int);
   virtual double calcError();
   virtual double ORP();

@@ -30,7 +30,7 @@ splot "difference.txt" matrix
 
 set output "Vratio.png"
 set pm3d map
-set palette defined (-10 "blue", -5 "cyan", -1 "turquoise", 0 "black", 1 "orange", 5 "sandybrown", 10 "red")
+set palette defined (0 "black", 0.01 "white", 0.1 "blue")
 splot "ratio.txt" matrix
 #reset
 
