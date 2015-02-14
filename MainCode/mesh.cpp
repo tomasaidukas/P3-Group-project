@@ -89,7 +89,7 @@ Mesh::~Mesh()
     delete[] matrix[i];
   }
 	
-	std::cout << "destroying array " << std::endl;
+	//std::cout << "destroying array " << std::endl;
   //deallocate x array
   delete[] matrix;
 }

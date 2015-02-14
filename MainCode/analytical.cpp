@@ -7,14 +7,15 @@ Analytic::Analytic(): TopAlg(),
 //overload constructor
 Analytic::Analytic(int dimx, int dimy, double radius, double V, double tol)
 {
-	//initialize tolerance
-	_tol = tol;
-	//initialize radius
-	_radius = radius;
-	//initialize potential difference
-	_V = V;
+  //initialize tolerance
+  _tol = tol;
+  //initialize radius
+  _radius = radius;
+  //initialize potential difference
+  _V = V;
+  _iter = 0;
 	
-	//initialize dimensions
+  //initialize dimensions
   _dimx = dimx;
   _dimy = dimy;
   
@@ -46,7 +47,7 @@ void Analytic::setBoundary()
   //insert the parallel plates
   //this sets the plates on the y axis
 	for (int j = 0 ; j<_dimy ; j++){
-		_PMesh.setV(_V/2,j,0);
+	  _PMesh.setV(_V/2,j,0);
 		_SMesh.setV(_V/2,j,0);
 		_PMesh.setisBoundary(true,j,0);
 		_SMesh.setisBoundary(true,j,0);
@@ -60,7 +61,7 @@ void Analytic::setBoundary()
 	//insert a circle in the middle
   for (int i = 0 ; i<_dimx ; i++){
   	 for (int j = 0 ; j<_dimy ; j++){
-			r = sqrt(pow(i-_L/2,2) + pow(j-_L/2,2));
+		r = sqrt(pow(i-_L/2,2) + pow(j-_L/2,2));
   		   if (pow(r,2)<=pow(_radius,2)){
   		    _PMesh.setisBoundary(true,i,j);
   		    _SMesh.setisBoundary(true,i,j);

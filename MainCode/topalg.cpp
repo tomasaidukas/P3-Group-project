@@ -1,4 +1,5 @@
 #include "topalg.h"
+#include "analytical.h"
 
 TopAlg::TopAlg()
 {}
@@ -6,7 +7,7 @@ TopAlg::TopAlg()
 TopAlg::~TopAlg(){}
 
 
-double TopAlg::runAlgorithm(){
+void TopAlg::runAlgorithm(){
 	double tempvalue;
 	_iter=1;
   // 		Solution one iteration ahead
@@ -49,7 +50,10 @@ double TopAlg::runAlgorithm(){
     // Set old potential = new potential
     _PMesh = _SMesh;
   }
-  return _iter;
+}
+
+double TopAlg::getIter(){
+ return _iter;
 }
 
 // Draws images:
@@ -105,7 +109,7 @@ void TopAlg::ratio(TopAlg& other)
 {
   if (_dimx != other._dimx || _dimy != other._dimy){ 
     std::cout << "array size mismatch\n";
-  }
+}
 
   
   Mesh diffmesh = Mesh(_dimx, _dimy);
@@ -141,7 +145,7 @@ double TopAlg::calcError(){
 			//find the largest difference value
 			if (_err < difference){
 				_err = difference;
-							//std::cout << _err << std::endl;
+			  
 			}
 		}
 	}
@@ -235,3 +239,17 @@ void TopAlg::setEdges(int i,int j)
 				}
 }	
 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

@@ -13,7 +13,7 @@
 #define PI 3.141592
 
 class TopAlg{
- protected:
+ public:
   int _dimx, _dimy;
   Mesh _PMesh;
   Mesh _SMesh;
@@ -28,10 +28,10 @@ class TopAlg{
   TopAlg();
   ~TopAlg();
 
-  
+  double getIter();
   void difference(TopAlg& other);
   void ratio(TopAlg& other);
-  double runAlgorithm();
+  void runAlgorithm();
   virtual void setEdges(int,int);
   virtual double calcError();
   virtual double ORP();

@@ -3,6 +3,7 @@
 
 //user-defined header files
 #include "numerical.h"
+#include "analyze.h"
 #include "analytical.h"
 #include "mesh.h"
 #include "topalg.h"
@@ -23,7 +24,7 @@ int main(){
   // 3 => numerical from an image plot  
   
   //find the numerical solution
-	std::cout << numerical.runAlgorithm() << std::endl;
+  numerical.runAlgorithm();
   numerical.printSolution(3);
 
 	//find analytical solution
@@ -31,11 +32,16 @@ int main(){
   ana_alg.printSolution(1);
   
   //find analytical soltion numerically
-	std::cout << num_alg.runAlgorithm() << std::endl;
+  num_alg.runAlgorithm();
   num_alg.printSolution(2);
 	
   //find the difference
   ana_alg.difference(num_alg);
   ana_alg.ratio(num_alg);
+  
+  Analyze analyze;
+  
+  //analyze.compareIterations(0.0001,100,10);
+  //analyze.compMaxDif(0.0001,100,10);
   return 0;
 }

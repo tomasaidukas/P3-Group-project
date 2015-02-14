@@ -12,6 +12,7 @@ class Analytic : public TopAlg{
   double _L; //distance between plates
   double r;//temporary variable
 
+
  public:
   Analytic();
   Analytic(int, int, double, double, double); //constructor
@@ -19,6 +20,7 @@ class Analytic : public TopAlg{
   
   void setBoundary();
   void runAnalytical();
+
 };
 
 #endif
