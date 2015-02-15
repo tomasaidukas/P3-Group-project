@@ -17,6 +17,9 @@ class TopAlg{
   int _dimx, _dimy;
   Mesh _PMesh;
   Mesh _SMesh;
+  Mesh _EMesh;
+  Mesh _EdxMesh;
+  Mesh _EdyMesh;
   double _orp;
   double _err;
   double _tol;
@@ -32,10 +35,11 @@ class TopAlg{
   void difference(TopAlg& other);
   void ratio(TopAlg& other);
   void runAlgorithm();
+  void runElectric(int);
   virtual void setEdges(int,int);
   virtual double calcError();
   virtual double ORP();
-  virtual void printSolution(int);
+  virtual void printPotential(int);
    
 };
 

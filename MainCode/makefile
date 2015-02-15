@@ -11,6 +11,10 @@ lib=-L/opt/X11/lib -lX11 -pthread -lm
 
 main : $(obj)
 	$(CC) -o $@ $^ -g $(lib)
+	mkdir -p PotentialField
+	mkdir -p ElectricField
+	mkdir -p Plots
+	mkdir -p Analyze
 
 %.o : %.c $(headers)
 	$(CC) -c -g $<

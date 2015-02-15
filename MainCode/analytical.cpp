@@ -1,10 +1,13 @@
 #include "analytical.h"
 
-//default constructor
-Analytic::Analytic(): TopAlg(),
-		      _radius(0){}
 
-//overload constructor
+
+/*************************************************
+ * Constructor
+ * Takes dimensions of X and Y, radius of the
+ * circle in the middle, its potential and
+ * an error tolerance as arguments
+ *************************************************/
 Analytic::Analytic(int dimx, int dimy, double radius, double V, double tol)
 {
   //initialize tolerance
@@ -39,53 +42,60 @@ Analytic::Analytic(int dimx, int dimy, double radius, double V, double tol)
 
 
 
-//set boundary conditions
+
+/*************************************************
+ * Sets boundary conditions for the numerical
+ * case where a circle is in the middle
+ * in an electrostatic field
+ *************************************************/
 void Analytic::setBoundary()
 {
-	double r;
+    double r;
+    //insert the parallel plates
+    //this sets the plates on the y axis
+    for (int j = 0 ; j<_dimy ; j++){
+	_PMesh.setV(_V/2,0,j);
+	_SMesh.setV(_V/2,0,j);
+	_PMesh.setisBoundary(true,0,j);
+	_SMesh.setisBoundary(true,0,j);
+	_PMesh.setV(-_V/2,_dimy-1,j);
+	_SMesh.setV(-_V/2,_dimy-1,j);		
+	_PMesh.setisBoundary(true,_dimy-1,j);
+	_SMesh.setisBoundary(true,_dimy-1,j);
+    }
 	
-  //insert the parallel plates
-  //this sets the plates on the y axis
+	
+    //insert a circle in the middle
+    for (int i = 0 ; i<_dimx ; i++){
 	for (int j = 0 ; j<_dimy ; j++){
-	  _PMesh.setV(_V/2,j,0);
-		_SMesh.setV(_V/2,j,0);
-		_PMesh.setisBoundary(true,j,0);
-		_SMesh.setisBoundary(true,j,0);
-		_PMesh.setV(-_V/2,j,_dimy-1);
-		_SMesh.setV(-_V/2,j,_dimy-1);		
-		_PMesh.setisBoundary(true,j,_dimy-1);
-		_SMesh.setisBoundary(true,j,_dimy-1);
-	}
-	
-	
-	//insert a circle in the middle
-  for (int i = 0 ; i<_dimx ; i++){
-  	 for (int j = 0 ; j<_dimy ; j++){
-		r = sqrt(pow(i-_L/2,2) + pow(j-_L/2,2));
-  		   if (pow(r,2)<=pow(_radius,2)){
-  		    _PMesh.setisBoundary(true,i,j);
+	    r = sqrt(pow(i-_L/2,2) + pow(j-_L/2,2));
+		if (pow(r,2)<=pow(_radius,2)){
+		    _PMesh.setisBoundary(true,i,j);
   		    _SMesh.setisBoundary(true,i,j);
   		   }
   	  }
    }
 }
 
-//run algorithm
 
+/*************************************************
+ * Runs the algorithm to find the analytical
+ * solution
+ *************************************************/
 void Analytic::runAnalytical()
 {
-	double r;
-  double _E0 = _V/_L;
-  for (int i=0; i<_dimx; i++){
-    for (int j=0; j<_dimy; j++){
-			r = sqrt(pow(i-_L/2,2) + pow(j-_L/2,2));
-      if (pow(r,2)>pow(_radius,2)){
- 				double costheta = (i-_L/2)/r;	
- 				double tempval = (-_E0 * ( r - (pow(_radius,2)/r)) * costheta);
-			 _PMesh.setV(tempval, i, j);
-	  	}
-   	}	 
-  }
+    double r;
+    double _E0 = _V/_L;
+    for (int i=0; i<_dimx; i++){
+	for (int j=0; j<_dimy; j++){
+	    r = sqrt(pow(i-_L/2,2) + pow(j-_L/2,2));
+	    if (pow(r,2)>pow(_radius,2)){
+ 		double costheta = (i-_L/2)/r;	
+ 		double tempval = (-_E0 * ( r - (pow(_radius,2)/r)) * costheta);
+		 _PMesh.setV(tempval, i, j);
+	    }
+	}	 
+    }
 }
 
 //destructor

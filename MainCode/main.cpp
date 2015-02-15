@@ -12,36 +12,38 @@
 
 int main(){
 
-  //(tolerance,potential,image name)
-  Numerical numerical(0.0001,100,"potential.png");//sets up the algorithm variables
-  //(dimx,dimy,circle radius,potential,tolerance)
-  Analytic ana_alg(100,100,50,100,0.0001);//sets up the analytical variables
-  Analytic num_alg(100,100,50,100,0.0001);//sets up the numerical values for an analytical solution
+    //(tolerance,potential,image name)
+    Numerical numerical(0.0001,100,"potential.png");//sets up the algorithm variables
+    //(dimx,dimy,circle radius,potential,tolerance)
+    Analytic ana_alg(100,100,10,100,0.0001);//sets up the analytical variables
+    Analytic num_alg(100,100,10,100,0.0001);//sets up the numerical values for an analytical solution
 
-  // printSolution() arguments:
-  // 1 => analytical plot
-  // 2 => numerical with circle inside plot
-  // 3 => numerical from an image plot  
-  
-  //find the numerical solution
-  numerical.runAlgorithm();
-  numerical.printSolution(3);
+    // printPotential()/runElectric() arguments:
+    // 1 => analytical plot
+    // 2 => numerical with circle inside plot
+    // 3 => numerical from an image plot  
 
-	//find analytical solution
-  ana_alg.runAnalytical();
-  ana_alg.printSolution(1);
-  
-  //find analytical soltion numerically
-  num_alg.runAlgorithm();
-  num_alg.printSolution(2);
+    //find the numerical solution
+    numerical.runAlgorithm();
+    numerical.printPotential(3);
+    numerical.runElectric(3);
+
+    //find analytical solution
+    ana_alg.runAnalytical();
+    ana_alg.printPotential(1);
+
+    //find analytical soltion numerically
+    num_alg.runAlgorithm();
+    num_alg.printPotential(2);
+    num_alg.runElectric(2);
 	
-  //find the difference
-  ana_alg.difference(num_alg);
-  ana_alg.ratio(num_alg);
-  
-  Analyze analyze;
-  
-  //analyze.compareIterations(0.0001,100,10);
-  //analyze.compMaxDif(0.0001,100,10);
-  return 0;
+    //find the difference
+    ana_alg.difference(num_alg);
+    ana_alg.ratio(num_alg);
+
+    //Analyze analyze;
+
+    //analyze.compareIterations(0.0001,100,10);
+    //analyze.compMaxDif(0.0001,100,10);
+    return 0;
 }
