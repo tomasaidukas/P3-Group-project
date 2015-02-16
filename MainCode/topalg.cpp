@@ -127,6 +127,9 @@ void TopAlg::runElectric(int i){
     Mesh _EdyMesh(_dimx,_dimy);
     Mesh _EMesh(_dimx,_dimy);
     
+    Mesh _EDXMesh(_dimx,_dimy);
+    Mesh _EDYMesh(_dimx,_dimy);
+    
     for (int X = 0 ; X<_dimx-1 ; X++){
 	for (int Y = 0 ; Y<_dimy-1 ; Y++){
 	    // Components of the electric field
@@ -135,11 +138,20 @@ void TopAlg::runElectric(int i){
 	    temp = _PMesh.getV(X,Y+1) - _PMesh.getV(X,Y); 
 	    _EdyMesh.setV(temp,X,Y);
 	    
+	    //changes the field placement in the mesh
+	    temp = 0.5*(_EdxMesh.getV(X,Y+1) + _EdxMesh.getV(X,Y));
+	    _EDXMesh.setV(temp,X,Y);
+	    temp = 0.5*(_EdyMesh.getV(X+1,Y) + _EdyMesh.getV(X,Y));
+	    _EDYMesh.setV(temp,X,Y);
+	    
 	    // Magnitude of E	
 	    temp = sqrt(pow(_EdxMesh.getV(X,Y),2) + pow(_EdyMesh.getV(X,Y),2));
 	    _EMesh.setV(temp,X,Y);
 	}
     }
+    
+    
+    
     std::ofstream file;
     if ( i == 2){
 	file.open("ElectricField/EnumCircle.txt");
@@ -147,11 +159,12 @@ void TopAlg::runElectric(int i){
 	file.open("ElectricField/Enumerical.txt");
     }
     
+    
     //put data into a text file
     //it will have (X,Y,Edx,Edy,|E|) format
-    for (int X = 0 ; X<_dimx ; X++){
-	for (int Y = 0 ; Y<_dimy ; Y++){
-	    file << X << " " << Y << " " << _EdxMesh.getV(X,Y) << " " << _EdyMesh.getV(X,Y) << " " << _EMesh.getV(X,Y) << std::endl;
+    for (int X = 1 ; X<_dimx-1 ; X++){
+	for (int Y = 1 ; Y<_dimy-1 ; Y++){
+	    file << X << " " << Y << " " << _EDXMesh.getV(X,Y)<< " " << _EDYMesh.getV(X,Y) << " " << _EMesh.getV(X,Y) << std::endl;
 	}
     }
 }

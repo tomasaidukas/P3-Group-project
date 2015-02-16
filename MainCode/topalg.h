@@ -23,7 +23,9 @@ class TopAlg{
   double _orp;
   double _err;
   double _tol;
-  double _maxV;
+  double _maxV1;
+  double _maxV2;
+  double _maxV3;
   double _iter;
   
 

@@ -175,12 +175,12 @@ int Mesh::getDimY(){
 std::ostream& operator<<(std::ostream& out, const Mesh& mesh)
 {
 
-    for (int i=0; i<mesh._dimx; i++){
-	for (int j=0; j<mesh._dimy; j++){
-	    if (j==mesh._dimy-1){
-		out << mesh.matrix[j][i].V;
+    for (int j=0; j<mesh._dimy; j++){
+	for (int i=0; i<mesh._dimx; i++){
+	    if (i==mesh._dimx-1){
+		out << mesh.matrix[i][j].V;
 	    }else{
-		out << mesh.matrix[j][i].V << " ";
+		out << mesh.matrix[i][j].V << " ";
 	    }
 	}
 	out << std::endl;

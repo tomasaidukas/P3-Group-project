@@ -12,11 +12,11 @@
 
 int main(){
 
-    //(tolerance,potential,image name)
-    Numerical numerical(0.0001,100,"potential.png");//sets up the algorithm variables
-    //(dimx,dimy,circle radius,potential,tolerance)
-    Analytic ana_alg(100,100,10,100,0.0001);//sets up the analytical variables
-    Analytic num_alg(100,100,10,100,0.0001);//sets up the numerical values for an analytical solution
+    //(tolerance,potential for RED,potential for GREEN,potential for BLUE,image name)
+    Numerical numerical(0.0001,-100, 0, -100, "potentialNum.png");//sets up the algorithm variables
+    //(dimx,dimy,circle radius,potential of plates,tolerance)
+    Analytic ana_alg(100,200,10,100,0.0001);//sets up the analytical variables
+    Analytic num_alg(100,200,10,100,0.0001);//sets up the numerical values for an analytical solution
 
     // printPotential()/runElectric() arguments:
     // 1 => analytical plot
