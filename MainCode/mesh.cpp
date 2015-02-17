@@ -191,5 +191,6 @@ std::ostream& operator<<(std::ostream& out, const Mesh& mesh)
     for (int j=0; j<mesh._dimy; j++){
    		out << i << " " << j << " " << mesh.matrix[i][j].V << std::endl;
   		}
+        out << std::endl;
 	}
  }
