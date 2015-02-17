@@ -162,8 +162,8 @@ void TopAlg::runElectric(int i){
     
     //put data into a text file
     //it will have (X,Y,Edx,Edy,|E|) format
-    for (int X = 1 ; X<_dimx-1 ; X++){
-	for (int Y = 1 ; Y<_dimy-1 ; Y++){
+    for (int X = 1 ; X<_dimx-1 ; X=X+20){
+	for (int Y = 1 ; Y<_dimy-1 ; Y=Y+20){
 	    file << X << " " << Y << " " << _EDXMesh.getV(X,Y)<< " " << _EDYMesh.getV(X,Y) << " " << _EMesh.getV(X,Y) << std::endl;
 	}
     }
