@@ -65,4 +65,3 @@ set output "Plots/VequipotentialB.png"
 plot "Plots/Potential.dat" with image, "Plots/Lines.dat" with l lt -1 lw 0.5 
 exit
 
-
