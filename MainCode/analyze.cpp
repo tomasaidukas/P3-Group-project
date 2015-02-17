@@ -58,10 +58,9 @@ void Analyze::compareIterations(double tolerance, double potential, double radiu
     data.open("Analyze/VcompIterations.txt");
 
     //goes up to a 500 by 500 matrix
-    for (int i=20; i<500 ; i=i+20){
+    for (int i=20; i<300 ; i=i+20){
 	Analytic anal(i,i,radius,potential,tolerance);
 	anal.runAlgorithm();
-	std::cout << anal.getIter() << std::endl;
-	data << anal.getIter() << std::endl;
+	data << i << " " << anal.getIter() << std::endl;
     }
 }  
