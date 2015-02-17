@@ -41,9 +41,9 @@ int main(){
     ana_alg.difference(num_alg);
     ana_alg.ratio(num_alg);
 
-    //Analyze analyze;
+    Analyze analyze;
 
-    //analyze.compareIterations(0.0001,100,10);
+    analyze.compareIterations(0.0001,100,10);
     //analyze.compMaxDif(0.0001,100,10);
     return 0;
 }

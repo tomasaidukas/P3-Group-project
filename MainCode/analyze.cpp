@@ -50,18 +50,22 @@ void Analyze::compMaxDif(double tolerance, double potential, double radius){
  * Outputs a text file with number of iterations 
  * vs dimensions this function runs an algorithm 
  * several times with varying dimensions and stores 
- * the data in a file
+ * the data in a file. Compares time as well.
  *************************************************/
 void Analyze::compareIterations(double tolerance, double potential, double radius){
 
     std::ofstream data;
+    std::ofstream timedata;
     data.open("Analyze/VcompIterations.txt");
-
+    timedata.open("Analyze/VcompTime.txt");
+    
     //goes up to a 500 by 500 matrix
-    for (int i=20; i<500 ; i=i+20){
+    for (int i=20; i<300 ; i=i+20){
 	Analytic anal(i,i,radius,potential,tolerance);
 	anal.runAlgorithm();
-	std::cout << anal.getIter() << std::endl;
-	data << anal.getIter() << std::endl;
+	data << i << " " << anal.getIter() << std::endl;
+	timedata << i << " " << anal.getTime() << std::endl;
     }
 }  
+
+

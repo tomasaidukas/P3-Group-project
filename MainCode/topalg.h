@@ -10,6 +10,8 @@
 #include "mesh.h"
 #include "CImg.h"
 #include <cstring>
+#include <time.h> //compare computation time
+
 #define PI 3.141592
 
 class TopAlg{
@@ -27,12 +29,14 @@ class TopAlg{
   double _maxV2;
   double _maxV3;
   double _iter;
+  double _time;
   
 
  public:
   TopAlg();
   ~TopAlg();
 
+  double getTime();
   double getIter();
   void difference(TopAlg& other);
   void ratio(TopAlg& other);
