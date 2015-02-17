@@ -30,12 +30,14 @@ class TopAlg{
   double _maxV3;
   double _iter;
   double _time;
-  
+  double _maxError;
 
  public:
   TopAlg();
   ~TopAlg();
-
+  
+  double maxDiff(TopAlg& other);
+  double getTolerance();
   double getTime();
   double getIter();
   void difference(TopAlg& other);

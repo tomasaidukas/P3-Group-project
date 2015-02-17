@@ -8,9 +8,9 @@
 
 class Analyze: public TopAlg{
  public:
-    void compMaxDif(double, double, double); //compares the accuracy with increasing dimension size
+    void compMaxRatio(double, double, double); //compares the accuracy with increasing dimension size
     void compareIterations(double, double, double);//shows the number of iterations with increasing dimensions
-    
+    void compTol(double, double, double);//compares the tolerance with the number of iterations
 };
 
 #endif

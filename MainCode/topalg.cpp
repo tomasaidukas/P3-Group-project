@@ -62,6 +62,8 @@ void TopAlg::runAlgorithm(){
     _PMesh = _SMesh;
     }
     
+    _maxError = calcError();
+    
     //stop the clock and find the difference
     t2=clock();
     double diff ((float)t2-(float)t1);
@@ -83,6 +85,13 @@ double TopAlg::getIter(){
  *************************************************/
 double TopAlg::getTime(){
  return _time;
+}
+
+/*************************************************
+ * Returns the tolerance
+ *************************************************/
+double TopAlg::getTolerance(){
+    return _tol;
 }
 
 
@@ -180,8 +189,8 @@ void TopAlg::runElectric(int i){
     
     //put data into a text file
     //it will have (X,Y,Edx,Edy,|E|) format
-    for (int X = 1 ; X<_dimx-1 ; X=X+20){
-	for (int Y = 1 ; Y<_dimy-1 ; Y=Y+20){
+    for (int X = 1 ; X<_dimx-1 ; X++){
+	for (int Y = 1 ; Y<_dimy-1 ; Y++){
 	    file << X << " " << Y << " " << _EDXMesh.getV(X,Y)<< " " << _EDYMesh.getV(X,Y) << " " << _EMesh.getV(X,Y) << std::endl;
 	}
     }
@@ -276,6 +285,34 @@ double TopAlg::calcError(){
     }
     return _err;
 }
+
+/*************************************************
+ * Takes the difference between two Meshes
+ * and find the maximum
+ *************************************************/
+double TopAlg::maxDiff(TopAlg& other)
+{
+    if (_dimx != other._dimx || _dimy != other._dimy){ 
+	std::cout << "array size mismatch\n";
+    }
+    
+    double temp=0;
+    double diff;
+    
+    for (int i=0; i<_dimx; i++){
+	for (int j=0; j<_dimy; j++){
+	    
+	    diff = fabs( _PMesh.getV(i,j) - other._PMesh.getV(i,j) );
+	    
+	    //if (temp < diff){
+		//temp = diff;
+	    //}	    
+	}
+    }
+
+    return diff;
+}
+
 
 /*************************************************
  * Calculates the over-relaxation parameter

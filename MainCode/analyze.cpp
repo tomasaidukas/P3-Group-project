@@ -1,50 +1,6 @@
 #include "analyze.h"
 #include "analytical.h"
 
-/*
-//finds the maximum difference between the analytical and numerical solutions
-void Analyze::compMaxDif(double tolerance, double potential, double radius){
-  
-  //largest difference value
-  double ratio;
-  double temp=0;
-  std::ofstream data;
-  data.open("VmaxRatio");
-  
-  for (int i=40 ; i<100 ; i=i+20){
-    Analytic anal(i,i,radius,potential,tolerance);
-    Analytic num(i,i,radius,potential,tolerance);
-    
-    for (int X = 0 ; X<_dimx ; X++){
-      for (int Y = 0 ; Y<_dimy ; Y++){
-	if (!num._PMesh.getisBoundary(X,Y) && !anal._PMesh.getisBoundary(X,Y)){
-
-	  ratio = fabs(anal._PMesh.getV(X,Y) / num._PMesh.getV(X,Y));
-	  std::cout << ratio << std::endl;
-	
-	  //find the largest difference value
-	  if (temp < ratio){
-	    temp = ratio;
-	    std::cout << temp << std::endl;
-	  }
-	  
-	}
-      }
-    }
-    //dimensions, maximum difference
-    data << i << " " << temp << std::endl;
-  }
-}*/
-
-
-
-
-
-
-
-
-
-
 
 /*************************************************
  * Outputs a text file with number of iterations 
@@ -59,7 +15,7 @@ void Analyze::compareIterations(double tolerance, double potential, double radiu
     data.open("Analyze/VcompIterations.txt");
     timedata.open("Analyze/VcompTime.txt");
     
-    //goes up to a 500 by 500 matrix
+    //goes up to a 300 by 300 matrix
     for (int i=20; i<300 ; i=i+20){
 	Analytic anal(i,i,radius,potential,tolerance);
 	anal.runAlgorithm();
@@ -67,5 +23,38 @@ void Analyze::compareIterations(double tolerance, double potential, double radiu
 	timedata << i << " " << anal.getTime() << std::endl;
     }
 }  
+
+/*************************************************
+ * Outputs a text file with tolerance 
+ * vs iterations AND text file with tolerance
+ * vs error.
+ *************************************************/
+void Analyze::compTol(double dim, double potential, double radius){
+
+    std::ofstream datatol;
+    std::ofstream dataerr;
+    double err;
+    
+    datatol.open("Analyze/VcompTolerance.txt");
+    dataerr.open("Analyze/VcompError.txt");
+    for (int i=10; i<1000 ; i=i+100){
+	
+	Analytic anal(dim,dim,radius,potential,double(1)/i);
+	Analytic num(dim,dim,radius,potential,double(1)/i);
+	num.runAlgorithm();
+	anal.runAnalytical();
+	
+	err = anal.maxDiff(num);
+	
+	//tolerance and iteration number
+	datatol << double(1)/i << " " << num.getIter() << std::endl;
+	//tolerance and maximum error
+	std::cout << double(1)/i << std::endl;
+	dataerr << double(1)/i << " " << err << std::endl;
+    }
+}  
+
+
+
 
 
