@@ -2,29 +2,36 @@
 #
 # Plots the Potential graphs from the output of the Numerical Solution
 #
+
 #-------------------------#
-# POTENTIAL #
+#        POTENTIAL        #
 #-------------------------#
+
 set output "Plots/Vnumerical.png"
 set terminal png
 set palette defined (-10 "blue", -5 "cyan", -1 "turquoise", 0 "black")
 plot "PotentialField/Vnumerical.txt" with image
+
 set output "Plots/Vanalytical.png"
 set terminal png
 set palette defined (-10 "blue", -5 "cyan", -1 "turquoise", 0 "black", 1 "orange", 5 "sandybrown", 10 "red")
 plot "PotentialField/Vanalytical.txt" with image
+
 set output "Plots/VnumCircle.png"
 set terminal png
 set palette defined (-10 "blue", -5 "cyan", -1 "turquoise", 0 "black", 1 "orange", 5 "sandybrown", 10 "red")
-plot "PotentialField/VnumCircle.txt" with image
+plot "PotentialField/VnumCircle.txt" with image 
+
 set output "Plots/Vdifference.png"
 set terminal png
 set palette defined (-10 "blue", -5 "cyan", -1 "turquoise", 0 "black", 1 "orange", 5 "sandybrown", 10 "red")
 plot "PotentialField/Vdifference.txt" with image
+
 set output "Plots/Vratio.png"
 set terminal png
 set palette defined (0 "black", 0.01 "white", 0.1 "blue")
 plot "PotentialField/Vratio.txt" with image
+
 set isosample 250,250
 set table "Plots/Potential.dat"
 splot "PotentialField/VnumCircle.txt"
@@ -39,7 +46,8 @@ reset
 unset key
 set terminal png
 set output "Plots/Vequipotential.png"
-plot "Plots/Potential.dat" with image, "Plots/Lines.dat" with l lt -1 lw 0.5
+plot "Plots/Potential.dat" with image, "Plots/Lines.dat" with l lt -1 lw 0.5 
+
 set isosample 250,250
 set table "Plots/Potential.dat"
 splot "PotentialField/Vnumerical.txt"
@@ -54,5 +62,7 @@ reset
 unset key
 set terminal png
 set output "Plots/VequipotentialB.png"
-plot "Plots/Potential.dat" with image, "Plots/Lines.dat" with l lt -1 lw 0.5
+plot "Plots/Potential.dat" with image, "Plots/Lines.dat" with l lt -1 lw 0.5 
 exit
+
+
