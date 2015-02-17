@@ -187,8 +187,8 @@ std::ostream& operator<<(std::ostream& out, const Mesh& mesh)
     }*/
 //needed format for ROOT
 
- for (int i=0; i<mesh._dimx; i=i+sqrt(mesh._dimx)){
-    for (int j=0; j<mesh._dimy; j=j+sqrt(mesh._dimy)){
+ for (int i=0; i<mesh._dimx; i++)){
+    for (int j=0; j<mesh._dimy; j=++){
    		out << i << " " << j << " " << mesh.matrix[i][j].V << std::endl;
   		}
 	}
