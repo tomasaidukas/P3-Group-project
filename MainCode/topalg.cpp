@@ -17,6 +17,10 @@ void TopAlg::runAlgorithm(){
     double tempvalue;
     _iter=1;
     
+    //start the clock
+    clock_t t1,t2;
+    t1=clock();
+    
     //Solution one iteration ahead
     //using the Jacobi method	
     for (int i = 1 ; i<_dimx-1 ; i++){
@@ -57,6 +61,11 @@ void TopAlg::runAlgorithm(){
     // Set old potential = new potential
     _PMesh = _SMesh;
     }
+    
+    //stop the clock and find the difference
+    t2=clock();
+    double diff ((float)t2-(float)t1);
+    _time = diff / CLOCKS_PER_SEC;
 }
 
 
@@ -67,6 +76,15 @@ void TopAlg::runAlgorithm(){
 double TopAlg::getIter(){
  return _iter;
 }
+
+/*************************************************
+ * Returns the time needed for the 
+ * algorithm to run
+ *************************************************/
+double TopAlg::getTime(){
+ return _time;
+}
+
 
 
 
