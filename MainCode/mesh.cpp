@@ -192,4 +192,5 @@ std::ostream& operator<<(std::ostream& out, const Mesh& mesh)
    		out << i << " " << j << " " << mesh.matrix[i][j].V << std::endl;
   		}
 	}
+    out << std::endl;
  }
