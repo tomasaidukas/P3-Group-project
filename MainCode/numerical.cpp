@@ -6,23 +6,26 @@
  * Takes in the tolerance, maximum potential and 
  * file name as arguments
  *************************************************/
-Numerical::Numerical(double tol, double maxV1, double maxV2, double maxV3, std::string str)
+Numerical::Numerical(double tol, double maxV1, double maxV2, double maxV3, std::string str, int scale)
 {
   //load the image
   image.load(str.c_str());
   
   //input arguments
   _tol = tol;
-  
+  _scale = scale;
+
   //potential values for red, green and blue colors
   _maxV1 = maxV1;
   _maxV2 = maxV2;
   _maxV3 = maxV3;
   
   //image dimensions
-  _dimx = image.width();  
-  _dimy = image.height();
-  
+  _imagex = image.width();  
+  _imagey = image.height();
+  _dimx = _scale * image.width();
+  _dimy = _scale * image.height();
+
   //allocate new arrays
   _PMesh = Mesh(_dimx, _dimy);
   _SMesh = Mesh(_dimx, _dimy);
@@ -52,24 +55,37 @@ Numerical::Numerical(double tol, double maxV1, double maxV2, double maxV3, std::
 void Numerical::setBoundary()
 {
     // set the boundaries from an image file
-    for (int y=0 ; y<_dimy ; y++){
-	for (int x=0 ; x<_dimx ; x++){
+    for (int y=0 ; y<_imagey ; y++){
+	for (int x=0 ; x<_imagex ; x++){
 	    if( ((int) image(x,y,0,0) == 255) && ((int)image(x,y,0,1)==0) && ((int)image(x,y,0,2) == 0) ){
-		_PMesh.setV(_maxV1,x,y);
-		_PMesh.setisBoundary(true, x,y);
-		_SMesh.setV(_maxV1,x,y);
-		_SMesh.setisBoundary(true, x,y);
+	      for (int p=_scale*x; p<_scale*x+_scale; p++){
+		for (int q=_scale*y; q<_scale*y+_scale; q++){
+		  _PMesh.setV(_maxV1,p,q);
+		  _PMesh.setisBoundary(true,p,q);
+		  _SMesh.setV(_maxV1,p,y);
+		  _SMesh.setisBoundary(true,p,q);
+		}
+	      }
 	    }else if( ((int) image(x,y,0,0) == 0) && ((int)image(x,y,0,1)==255) && ((int)image(x,y,0,2) == 0) ){
-		_PMesh.setV(_maxV2,x,y); 
-		_PMesh.setisBoundary(true, x,y);
-		_SMesh.setV(0,x,y);
-		_SMesh.setisBoundary(true, x,y);
+	      for (int p=_scale*x; p<_scale*x+_scale; p++){
+		for (int q=_scale*y; q<_scale*y+_scale; q++){
+		  _PMesh.setV(_maxV2,p,q); 
+		  _PMesh.setisBoundary(true,p,q);
+		  _SMesh.setV(_maxV2,p,q);
+		  _SMesh.setisBoundary(true,p,q);
+		}
+	      }
 	    }else if( ((int) image(x,y,0,0) == 0) && ((int)image(x,y,0,1)==0) && ((int)image(x,y,0,2) == 255) ){
-		_PMesh.setV(_maxV3,x,y);
-		_PMesh.setisBoundary(true, x,y);
-		_SMesh.setV(_maxV3,x,y);
-		_SMesh.setisBoundary(true, x,y);
+	      for (int p=_scale*x; p<_scale*x+_scale; p++){
+		for (int q=_scale*y; q<_scale*y+_scale; q++){	 
+		  _PMesh.setV(_maxV3,p,q);
+		  _PMesh.setisBoundary(true,p,q);
+		  _SMesh.setV(_maxV3,p,q);
+		  _SMesh.setisBoundary(true,p,q);
+		}
+	      }
 	    }
+	    
 	}
     }
 }

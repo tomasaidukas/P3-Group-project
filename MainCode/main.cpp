@@ -13,10 +13,10 @@
 int main(){
 
     //(tolerance,potential for RED,potential for GREEN,potential for BLUE,image name)
-    Numerical numerical(0.01,-500, 0, -500, "potentialNum.png");//sets up the algorithm variables
+  Numerical numerical(0.01,-10, 0, -10, "potentialNum.png", 1);//sets up the algorithm variables
     //(dimx,dimy,circle radius,potential of plates,tolerance)
-    Analytic ana_alg(1000,1000,100,1000,0.1);//sets up the analytical variables
-    Analytic num_alg(1000,1000,100,1000,0.1);//sets up the numerical values for an analytical solution
+  //    Analytic ana_alg(1000,1000,100,1000,0.1);//sets up the analytical variables
+  //    Analytic num_alg(1000,1000,100,1000,0.1);//sets up the numerical values for an analytical solution
     
     
     /*
@@ -57,16 +57,16 @@ int main(){
     numerical.runElectric(3);
 
     //find analytical solution
-    ana_alg.runAnalytical();
-    ana_alg.printPotential(1);
+    //   ana_alg.runAnalytical();
+    //   ana_alg.printPotential(1);
 
     //find analytical soltion numerically
-    num_alg.runAlgorithm();
-    num_alg.printPotential(2);
-    num_alg.runElectric(2);
+    //   num_alg.runAlgorithm();
+    //    num_alg.printPotential(2);
+    //   num_alg.runElectric(2);
 	
     //find the difference
-    ana_alg.difference(num_alg, 1);
+    //    ana_alg.difference(num_alg, 1);
     //ana_alg.ratio(num_alg, 1);
 
     //Analyze analyze1;
