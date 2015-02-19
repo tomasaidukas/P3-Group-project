@@ -2,6 +2,7 @@
 #include "analytical.h"
 
 
+
 /*************************************************
  * Outputs a text file with number of iterations 
  * vs dimensions this function runs an algorithm 
@@ -16,42 +17,68 @@ void Analyze::compareIterations(double tolerance, double potential, double radiu
     timedata.open("Analyze/VcompTime.txt");
     
     //goes up to a 300 by 300 matrix
-    for (int i=20; i<300 ; i=i+20){
-	Analytic anal(i,i,radius,potential,tolerance);
-	anal.runAlgorithm();
-	data << i << " " << anal.getIter() << std::endl;
-	timedata << i << " " << anal.getTime() << std::endl;
+    for (int i=50; i<1051 ; i=i+100){
+	Analytic anal1(i,i,radius,potential,tolerance);
+	anal1.runAlgorithm();
+	data << i << " " << anal1.getIter() << std::endl;
+	timedata << i << " " << anal1.getTime() << std::endl;
     }
 }  
 
 /*************************************************
- * Outputs a text file with tolerance 
- * vs iterations AND text file with tolerance
- * vs error.
+ * Takes the difference between two Meshes
+ * and find the maximum
+ *************************************************/
+double Analyze::maxDiff(Analytic& num, Analytic& anal)
+{   
+    double differ = 0;
+    for (int i=0; i<num._dimx; i++){
+	for (int j=0; j<num._dimy; j++){
+	    
+	    double diff = fabs(num. _PMesh.getV(i,j) - anal._PMesh.getV(i,j) );
+	    
+	    if (differ < diff){
+		differ = diff;
+	    }
+	}
+    }
+
+    return differ;
+}
+
+/*************************************************
+ * Outputs text files with:
+ * tolerance vs iterations
+ * tolerance vs error
+ * tolerance vs time
+ * Change the 0.0001*i parameter to specify 
+ * a tolerance range if you want 
  *************************************************/
 void Analyze::compTol(double dim, double potential, double radius){
 
     std::ofstream datatol;
-    std::ofstream dataerr;
+    std::ofstream dataerr,timedata;
     double err;
     
     datatol.open("Analyze/VcompTolerance.txt");
     dataerr.open("Analyze/VcompError.txt");
-    for (int i=10; i<1000 ; i=i+100){
+    timedata.open("Analyze/VcompTolTime.txt");
+    //for (int i=10; i<10011 ; i=i+500){
 	
-	Analytic anal(dim,dim,radius,potential,double(1)/i);
-	Analytic num(dim,dim,radius,potential,double(1)/i);
+	Analytic anal(dim,dim,radius,potential,0.01);
+	Analytic num(dim,dim,radius,potential,0.01);
 	num.runAlgorithm();
 	anal.runAnalytical();
 	
-	err = anal.maxDiff(num);
+	err = num.difference(anal,0);
 	
 	//tolerance and iteration number
-	datatol << double(1)/i << " " << num.getIter() << std::endl;
+	datatol << 0.01 << " " << num.getIter() << std::endl;
 	//tolerance and maximum error
-	std::cout << double(1)/i << std::endl;
-	dataerr << double(1)/i << " " << err << std::endl;
-    }
+	dataerr << 0.01 << " " << err << std::endl;
+
+	timedata << 0.01 << " " << num.getTime() << std::endl;
+    //}
 }  
 
 

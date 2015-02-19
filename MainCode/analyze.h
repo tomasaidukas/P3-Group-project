@@ -5,12 +5,15 @@
 
 #include "topalg.h"
 #include "analytical.h"
+#include <cmath>
 
 class Analyze: public TopAlg{
  public:
+     
     void compMaxRatio(double, double, double); //compares the accuracy with increasing dimension size
     void compareIterations(double, double, double);//shows the number of iterations with increasing dimensions
     void compTol(double, double, double);//compares the tolerance with the number of iterations
+    double maxDiff(Analytic&, Analytic&);
 };
 
 #endif

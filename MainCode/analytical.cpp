@@ -1,5 +1,7 @@
 #include "analytical.h"
 
+Analytic::Analytic(){
+}
 
 
 /*************************************************

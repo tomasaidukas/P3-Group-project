@@ -114,6 +114,28 @@ double TopAlg::getTolerance(){
  *************************************************/
 void TopAlg::printPotential(int i)
 {
+    /*
+    std::ofstream file1,file2,file3,file4,file5,file6;
+    if ( i == 1){
+	file1.open("PotentialField/Vanalytical1.txt");
+	file1 << _PMesh;
+    }else if ( i == 2){
+	file2.open("PotentialField/VnumCircle1.txt");
+	file2 << _PMesh;
+    }else if ( i == 3){
+	file3.open("PotentialField/Vnumerical2.txt");
+	file3 << _PMesh;
+    }else if ( i == 4){
+	file4.open("PotentialField/VnumCircle2.txt");
+	file4 << _PMesh;
+    }else if ( i == 5){
+	file5.open("PotentialField/Vnumerical3.txt");
+	file5 << _PMesh;
+    }else if ( i == 6){
+	file6.open("PotentialField/VnumCircle3.txt");
+	file6 << _PMesh;
+    }*/
+    
     std::ofstream file;
     if ( i == 1){
 	file.open("PotentialField/Vanalytical.txt");
@@ -206,25 +228,43 @@ void TopAlg::runElectric(int i){
  * 
  * The format of the file is a X by Y matrix,
  * where X and Y are the coordinates of the Mesh
+ * 
+ * Also give the average differece between arrays
  *************************************************/
-void TopAlg::difference(TopAlg& other)
+double TopAlg::difference(TopAlg& other, int index)
 {
     if (_dimx != other._dimx || _dimy != other._dimy){ 
 	std::cout << "array size mismatch\n";
     }
-  
+    
+    double accumulator=0;
+    double diff;
+    
     Mesh diffmesh = Mesh(_dimx, _dimy);
+    
     for (int i=0; i<_dimx; i++){
 	for (int j=0; j<_dimy; j++){
-	    double diff = fabs( _PMesh.getV(i,j) - other._PMesh.getV(i,j) );
+	    diff = fabs( _PMesh.getV(i,j) - other._PMesh.getV(i,j) );
 	    diffmesh.setV(diff,i,j);
+	    //gets the total potential at all mesh points
+	    accumulator = accumulator + diff;
 	}
     }
-
-    std::ofstream file;
-    file.open("PotentialField/Vdifference.txt");
-    file << diffmesh;
-    file.close();
+    
+    //gets the average
+    double average = accumulator/(_dimx*_dimy);
+    
+    //gets the percentage of the total potential difference
+    double answer = average/other._V * 100;
+    
+    if (index == 1){
+	std::ofstream file;
+	file.open("PotentialField/Vdifference.txt");
+	file << diffmesh;
+	file.close();
+    }
+    
+    return answer;
 }
 
 
@@ -234,27 +274,44 @@ void TopAlg::difference(TopAlg& other)
  * 
  * The format of the file is a X by Y matrix,
  * where X and Y are the coordinates of the Mesh
+ * 
+ * Returns the average of potential ratios
  *************************************************/
-void TopAlg::ratio(TopAlg& other){
+double TopAlg::ratio(TopAlg& other, int index){
     
     if (_dimx != other._dimx || _dimy != other._dimy){ 
 	std::cout << "array size mismatch\n";
     }
+    double accumulator=0;
+    double diff;
 
     Mesh diffmesh = Mesh(_dimx, _dimy);
     for (int i=0; i<_dimx; i++){
 	for (int j=0; j<_dimy; j++){
-	    if (!other._PMesh.getisBoundary(i,j)){
+	    if (!other._PMesh.getisBoundary(i,j) && other._PMesh.getV(i,j) != 0){
 		double diff = fabs(_PMesh.getV(i,j) / other._PMesh.getV(i,j));
 		diffmesh.setV(diff,i,j);
+		    
+		//gets the total potential ratio at all mesh points
+		accumulator = accumulator + diff;
 	    }
 	}
     }
-
-    std::ofstream file;
-    file.open("PotentialField/Vratio.txt");
-    file << diffmesh;
-    file.close();  
+    
+    //gets the average
+    double average = accumulator/(_dimx*_dimy);
+    
+    //gets the percentage of the total potential difference
+    double answer = average/other._V * 100;
+    
+    if (index == 1){
+	std::ofstream file;
+	file.open("PotentialField/Vratio.txt");
+	file << diffmesh;
+	file.close();  
+    }
+    
+    return answer;
 }
 
 /*************************************************
@@ -286,32 +343,6 @@ double TopAlg::calcError(){
     return _err;
 }
 
-/*************************************************
- * Takes the difference between two Meshes
- * and find the maximum
- *************************************************/
-double TopAlg::maxDiff(TopAlg& other)
-{
-    if (_dimx != other._dimx || _dimy != other._dimy){ 
-	std::cout << "array size mismatch\n";
-    }
-    
-    double temp=0;
-    double diff;
-    
-    for (int i=0; i<_dimx; i++){
-	for (int j=0; j<_dimy; j++){
-	    
-	    diff = fabs( _PMesh.getV(i,j) - other._PMesh.getV(i,j) );
-	    
-	    //if (temp < diff){
-		//temp = diff;
-	    //}	    
-	}
-    }
-
-    return diff;
-}
 
 
 /*************************************************

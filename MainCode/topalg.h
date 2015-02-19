@@ -31,17 +31,18 @@ class TopAlg{
   double _iter;
   double _time;
   double _maxError;
+  double _differ;
+  double _V;
 
  public:
   TopAlg();
   ~TopAlg();
   
-  double maxDiff(TopAlg& other);
   double getTolerance();
   double getTime();
   double getIter();
-  void difference(TopAlg& other);
-  void ratio(TopAlg& other);
+  double difference(TopAlg& other, int);
+  double ratio(TopAlg& other, int);
   void runAlgorithm();
   void runElectric(int);
   virtual void setEdges(int,int);
