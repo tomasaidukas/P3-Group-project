@@ -15,8 +15,8 @@ int main(){
     //(tolerance,potential for RED,potential for GREEN,potential for BLUE,image name)
     Numerical numerical(0.01,-500, 0, -500, "potentialNum.png");//sets up the algorithm variables
     //(dimx,dimy,circle radius,potential of plates,tolerance)
-    Analytic ana_alg(1000,1000,100,1000,0.1);//sets up the analytical variables
-    Analytic num_alg(1000,1000,100,1000,0.1);//sets up the numerical values for an analytical solution
+    Analytic ana_alg(150,150,20,1000,0.1);//sets up the analytical variables
+    Analytic num_alg(150,150,20,1000,0.1);//sets up the numerical values for an analytical solution
     
     
     /*

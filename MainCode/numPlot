@@ -30,6 +30,7 @@ set table "Plots/Potential.dat"
 splot "PotentialField/VnumCircle.txt"
 unset table
 set contour base
+set dgrid3d
 set cntrparam level incremental -50, 5, 50
 unset surface
 set table "Plots/Lines.dat"
@@ -38,6 +39,7 @@ unset table
 reset
 unset key
 set terminal png
+set dgrid3d
 set output "Plots/Vequipotential.png"
 plot "Plots/Potential.dat" with image, "Plots/Lines.dat" with l lt -1 lw 0.5
 set isosample 250,250
@@ -45,6 +47,7 @@ set table "Plots/Potential.dat"
 splot "PotentialField/Vnumerical.txt"
 unset table
 set contour base
+set dgrid3d
 set cntrparam level incremental -100, 5, 0
 unset surface
 set table "Plots/Lines.dat"

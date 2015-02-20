@@ -169,6 +169,10 @@ int Mesh::getDimY(){
 }
 
 
+void Mesh::setSpacing(double i){
+  _Spacing = i;
+}
+
 /*************************************************
  * Overload the << operator for Meshes
  *************************************************/
@@ -187,10 +191,19 @@ std::ostream& operator<<(std::ostream& out, const Mesh& mesh)
     }*/
 //needed format for ROOT
 
-    for (int i=0; i<mesh._dimx; i++){
-	for (int j=0; j<mesh._dimy; j++){
-	    out << i << " " << j << " " << mesh.matrix[i][j].V << std::endl;
-	}
+  if (mesh._Spacing != 0 ){
+    for (int i=0; i<mesh._dimx; i=i+mesh._Spacing){
+			for (int j=0; j<mesh._dimy; j=j+mesh._Spacing){
+		    out << i << " " << j << " " << mesh.matrix[i][j].V << std::endl;
+			}
     }
     out << std::endl;
+  }else{
+      for (int i=0; i<mesh._dimx; i++){
+				for (int j=0; j<mesh._dimy; j++){
+			    out << i << " " << j << " " << mesh.matrix[i][j].V << std::endl;
+			}
+    }
+    out << std::endl;
+	}
  }
