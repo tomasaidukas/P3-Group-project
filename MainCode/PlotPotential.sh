@@ -31,7 +31,7 @@ set table "Plots/Potential.dat"
 splot "PotentialField/VnumCircle.txt"
 unset table
 set contour base
-set cntrparam level incremental -50, 5, 50
+set cntrparam level incremental -50, 5, 50 #these depend on the problem voltage dimensions
 unset surface
 set table "Plots/Lines.dat"
 splot "PotentialField/VnumCircle.txt"
@@ -42,12 +42,14 @@ set terminal png
 set output "Plots/Vequipotential.png"
 set palette defined (-10 "blue", -5 "cyan", -1 "turquoise", 0 "black", 1 "orange", 5 "sandybrown", 10 "red")
 plot "Plots/Potential.dat" with image, "Plots/Lines.dat" with l lt -1 lw 0.5
+
+
 set isosample 250,250
 set table "Plots/Potential.dat"
 splot "PotentialField/Vnumerical.txt"
 unset table
 set contour base
-set cntrparam level incremental -100, 5, 0
+set cntrparam level incremental -10, 0.3, 10 #these depend on the problem voltage dimensions
 unset surface
 set table "Plots/Lines.dat"
 splot "PotentialField/Vnumerical.txt"
