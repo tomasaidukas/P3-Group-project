@@ -63,7 +63,7 @@ void Analyze::compTol(double dim, double potential, double radius){
     datatol.open("Analyze/VcompTolerance.txt");
     dataerr.open("Analyze/VcompError.txt");
     timedata.open("Analyze/VcompTolTime.txt");
-    //for (int i=10; i<10011 ; i=i+500){
+    for (int i=10; i<10011 ; i=i+90){
 	
 	Analytic anal(dim,dim,radius,potential,0.01);
 	Analytic num(dim,dim,radius,potential,0.01);
@@ -78,7 +78,7 @@ void Analyze::compTol(double dim, double potential, double radius){
 	dataerr << 0.01 << " " << err << std::endl;
 
 	timedata << 0.01 << " " << num.getTime() << std::endl;
-    //}
+    }
 }  
 
 

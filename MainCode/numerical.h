@@ -10,10 +10,11 @@ class Numerical: public TopAlg{
   CImg<unsigned char> image;
   int _imagex, _imagey;
   int _scale;
+  int _spacing;
 
   
   public:
-  Numerical(double,double,double,double, std::string, int scale); //constructor
+  Numerical(double,double,double,double, std::string, int); //constructor
   ~Numerical(); //destructor
 	
   void setBoundary(); //sets the boundaries from an image file

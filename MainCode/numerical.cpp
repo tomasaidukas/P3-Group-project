@@ -3,8 +3,8 @@
 
 /*************************************************
  * Constructor
- * Takes in the tolerance, maximum potential and 
- * file name as arguments
+ * Takes in the tolerance, maximum potential,
+ * file name and scaling as arguments 
  *************************************************/
 Numerical::Numerical(double tol, double maxV1, double maxV2, double maxV3, std::string str, int scale)
 {
@@ -14,7 +14,7 @@ Numerical::Numerical(double tol, double maxV1, double maxV2, double maxV3, std::
   //input arguments
   _tol = tol;
   _scale = scale;
-
+    
   //potential values for red, green and blue colors
   _maxV1 = maxV1;
   _maxV2 = maxV2;

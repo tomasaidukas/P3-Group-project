@@ -39,12 +39,13 @@ class TopAlg{
   ~TopAlg();
   
   double getTolerance();
+  double getPotential();
   double getTime();
   double getIter();
   double difference(TopAlg& other, int);
   double ratio(TopAlg& other, int);
   void runAlgorithm();
-  void runElectric(int);
+  void printElectric(int, int);
   virtual void setEdges(int,int);
   virtual double calcError();
   virtual double ORP();

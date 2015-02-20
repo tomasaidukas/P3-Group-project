@@ -8,7 +8,6 @@
 class Analytic : public TopAlg{
  private:
   int _radius;  //radius of cylinder
-  double _V;   //potential between plates
   double _L; //distance between plates
   double r;//temporary variable
 

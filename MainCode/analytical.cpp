@@ -83,6 +83,10 @@ void Analytic::setBoundary()
  *************************************************/
 void Analytic::runAnalytical()
 {
+    //start the clock
+    clock_t t1,t2;
+    t1=clock();
+    
     double r;
     double _E0 = _V/_dimx;
     double costheta;
@@ -96,8 +100,15 @@ void Analytic::runAnalytical()
  		tempval = (-_E0 * ( r - (pow(_radius,2)/r)) * costheta);
 		 _PMesh.setV(tempval, i, j);
 	    }
+	    _iter++;
 	}	 
     }
+    
+    //stop the clock and find the difference
+    t2=clock();
+    double diff ((float)t2-(float)t1);
+    _time = diff / CLOCKS_PER_SEC;
+    
 }
 
 //destructor
