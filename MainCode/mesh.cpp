@@ -131,6 +131,7 @@ void Mesh::setAllZero(){
     for (int X = 0 ; X<_dimx ; X++){
 	for (int Y = 0 ; Y<_dimy ; Y++){	
 	    matrix[X][Y].V = 0;
+	    matrix[X][Y].isBoundary = false;
 	}
     }
     
