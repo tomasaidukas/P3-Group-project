@@ -112,7 +112,7 @@ double TopAlg::getTolerance(){
  * filled with potetial values at each point,
  * where X and Y are dimensions of the array
  *************************************************/
-void TopAlg::printPotential(int i)
+void TopAlg::printGNUPLOT(int i)
 {
     /*
     std::ofstream file1,file2,file3,file4,file5,file6;
@@ -147,6 +147,7 @@ void TopAlg::printPotential(int i)
 	file.open("PotentialField/Vnumerical.txt");
 	file << _PMesh;
     }
+    
     file.close();
     
 }
@@ -167,10 +168,12 @@ void TopAlg::printPotential(int i)
  * spacing between mesh points put to a file
  * 
  *************************************************/
-void TopAlg::printElectric(int i, int spacing){
+void TopAlg::printROOT(int i, int spacing){
 
     std::ofstream file;
-    if ( i == 2){
+    if ( i == 1){
+	file.open("ElectricField/Eanalytical.txt");
+    }else if ( i == 2){
 	file.open("ElectricField/EnumCircle.txt");
     }else if ( i == 3){
 	file.open("ElectricField/Enumerical.txt");
@@ -179,8 +182,8 @@ void TopAlg::printElectric(int i, int spacing){
     //put data into a text file
     //it will have (X,Y,Edx,Edy,|E|) format
     if (spacing != 0){
-	for (int X = 1 ; X<_dimx-1 ; X=X+spacing){
-	    for (int Y = 1 ; Y<_dimy-1 ; Y=Y+spacing){
+	for (int X = 1 ; X<_dimx-1 ; X=X+sqrt(_dimx)/3){
+	    for (int Y = 1 ; Y<_dimy-1 ; Y=Y+sqrt(_dimx)/3){
 		file << X << " " << Y << " " << _PMesh.getV(X,Y) << std::endl;
 	    }
 	}

@@ -45,11 +45,11 @@ class TopAlg{
   double difference(TopAlg& other, int);
   double ratio(TopAlg& other, int);
   void runAlgorithm();
-  void printElectric(int, int);
+  void printROOT(int, int);
   virtual void setEdges(int,int);
   virtual double calcError();
   virtual double ORP();
-  virtual void printPotential(int);
+  virtual void printGNUPLOT(int);
    
 };
 
