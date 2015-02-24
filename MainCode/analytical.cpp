@@ -97,7 +97,7 @@ void Analytic::runAnalytical()
 	    r = sqrt(pow(i-_dimx/2,2) + pow(j-_dimy/2,2));
 	    if (pow(r,2)>pow(_radius,2)){
  		costheta = (i-_dimx/2)/r;	
- 		tempval = (-_E0 * ( r - (pow(_radius,3)/pow(r,3))) * costheta);
+ 		tempval = (-_E0 * ( r - (pow(_radius,2)/pow(r,2))) * costheta);
 		 _PMesh.setV(tempval, i, j);
 	    }
 	    _iter++;
