@@ -11,7 +11,7 @@
 
 
 int main(){
-
+    
     //(tolerance,potential for RED,potential for GREEN,potential for BLUE,image name, scaling)
     Numerical numerical(0.01,-10, 0, -10, "potentialNum.png", 1);//sets up the algorithm variables
     
@@ -126,6 +126,9 @@ int main(){
     //Analyze analyze2;
     //dim, potential, radius
     //analyze2.compTol(100,100,10);
+    
+    system("./PLOT_ALL.sh");
 
+    
     return 0;
 }

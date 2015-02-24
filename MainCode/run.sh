@@ -5,7 +5,7 @@ clear  #clear user screen
 EPOCH=`date +%s%N | cut -b1-13` #get time at start
 
 #NAME OF COMPILED PROCESS
-FILENAME='./main'
+FILENAME=$(echo './main')
 
 VAR=`ps -u $USER r | grep $FILENAME | cut -d' ' -f1` #get process id
 while ps -u $USER r | grep $VAR > /dev/null #while process is running
