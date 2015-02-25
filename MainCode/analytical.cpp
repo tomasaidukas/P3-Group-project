@@ -25,8 +25,9 @@ Analytic::Analytic(int dimx, int dimy, double radius, double V, double tol)
   _dimy = dimy;
   
   //allocate memory for arrays
-  _PMesh = Mesh(_dimx, _dimy);
-  _SMesh = Mesh(_dimx, _dimy);
+  //goes from 0 to 50, hence 51 dim
+  _PMesh = Mesh(_dimx+1, _dimy+1);
+  _SMesh = Mesh(_dimx+1, _dimy+1);
   
   //initialize the over-relaxation parameter
   _orp = TopAlg::ORP();
@@ -52,7 +53,7 @@ void Analytic::setBoundary()
     double r;
     //insert the parallel plates
     //this sets the plates on the y axis
-    for (int j = 0 ; j<_dimy ; j++){
+    for (int j = 0 ; j<_dimy+1 ; j++){
 	_PMesh.setV(_V/2,0,j);
 	_SMesh.setV(_V/2,0,j);
 	_PMesh.setisBoundary(true,0,j);
@@ -65,8 +66,8 @@ void Analytic::setBoundary()
 	
 	
     //insert a circle in the middle
-    for (int i = 0 ; i<_dimx ; i++){
-	for (int j = 0 ; j<_dimy ; j++){
+    for (int i = 0 ; i<_dimx+1 ; i++){
+	for (int j = 0 ; j<_dimy+1 ; j++){
 	    r = sqrt(pow(i-_dimx/2,2) + pow(j-_dimy/2,2));
 		if (pow(r,2)<=pow(_radius,2)){
 		    _PMesh.setisBoundary(true,i,j);
@@ -92,12 +93,15 @@ void Analytic::runAnalytical()
     double costheta;
     double tempval;
     
-    for (int i=0; i<_dimx; i++){
-	for (int j=0; j<_dimy; j++){
-	    r = sqrt(pow(i-_dimx/2,2) + pow(j-_dimy/2,2));
-	    if (pow(r,2)>pow(_radius,2)){
- 		costheta = (i-_dimx/2)/r;	
+    for (int i=0; i<_dimx+1; i++){
+	for (int j=0; j<_dimy+1; j++){
+	    r = (pow(i-_dimx/2,2) + pow(j-_dimy/2,2));
+	    if (r>pow(_radius,2)){
+ 		costheta = (i-_dimx/2)/pow(r,2);	
+ 		/*
  		tempval = (-_E0 * ( r - (pow(_radius,2)/pow(r,2))) * costheta);
+ 		*/
+ 		tempval = _E0*pow(r,2)*(pow(_dimx-1,2)/(pow(_radius,2) - pow(_dimx,2))) * (1-pow(_radius,2)/pow(r,3)) * costheta;
 		 _PMesh.setV(tempval, i, j);
 	    }
 	    _iter++;

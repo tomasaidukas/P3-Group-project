@@ -16,8 +16,8 @@ int main(){
     Numerical numerical(0.01,-10, 0, -10, "potentialNum.png", 1);//sets up the algorithm variables
     
     //(dimx,dimy,circle radius,potential of plates,tolerance)
-    Analytic ana_alg(100,100,15,2,0.001);//sets up the analytical variables
-    Analytic num_alg(100,100,15,2,0.001);//sets up the numerical values for an analytical solution
+    Analytic ana_alg(100,100,1,10,0.001);//sets up the analytical variables
+    Analytic num_alg(100,100,1,10,0.001);//sets up the numerical values for an analytical solution
     
     
     
