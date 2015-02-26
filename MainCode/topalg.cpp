@@ -30,11 +30,11 @@ void TopAlg::runAlgorithm(){
 		    _PMesh.getV(i,j+1) + 
 		    _PMesh.getV(i,j-1))/4;
 		    _SMesh.setV(tempvalue,i,j);		    
+		setEdges(i,j);
 	    }
-	    _iter++;
- 	setEdges(i,j);
 	}
     }
+    _iter++;
     // While the error is bigger than the tolerated one
     // carry on with approximating the solution further
     // until it is reached.
@@ -52,11 +52,12 @@ void TopAlg::runAlgorithm(){
 		    _SMesh.getV(i,j-1)));
 	    
 	    _SMesh.setV(tempvalue,i,j);
-	    }
-	    _iter++;
 	    setEdges(i,j);
+	    }
 	}
     }
+    
+    _iter++;
     calcError();
     // Set old potential = new potential
     _PMesh = _SMesh;
