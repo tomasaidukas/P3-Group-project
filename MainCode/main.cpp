@@ -12,12 +12,14 @@
 
 int main(){
     
+    system("./run.sh &");
+
     //(tolerance,potential for RED,potential for GREEN,potential for BLUE,image name, scaling)
     Numerical numerical(0.01,-10, 0, -10, "potentialNum.png", 1);//sets up the algorithm variables
     
     //(dimx,dimy,circle radius,potential of plates,tolerance)
-    Analytic ana_alg(100,100,25,1000,0.0000000001);//sets up the analytical variables
-    Analytic num_alg(100,100,25,1000,0.0000000001);//sets up the numerical values for an analytical solution
+    //Analytic ana_alg(100,100,25,1000,0.0000000001);//sets up the analytical variables
+    //Analytic num_alg(100,100,25,1000,0.0000000001);//sets up the numerical values for an analytical solution
     
     
     
@@ -54,15 +56,17 @@ int main(){
     /*******************************************
     * find analytical solution
     *******************************************/
+    /*
 	std::cout << std::endl;
 	ana_alg.runAnalytical();
 	ana_alg.printGNUPLOT(1);
 	ana_alg.printROOT(1,5);
 	std::cout << "Algorithm ran for " << ana_alg.getTime() << " second(s)" << std::endl;
-
+*/
     /*******************************************
     * find analytical soltion numerically
     *******************************************/
+    /*
        std::cout << std::endl;
        num_alg.runAlgorithm();
        num_alg.printGNUPLOT(2);
@@ -71,14 +75,14 @@ int main(){
        std::cout << "Algorithm ran for " << num_alg.getTime() << " second(s)" << std::endl;
        std::cout << "The average difference per mesh point as compared to the analytical solution is " << ana_alg.difference(num_alg,1) << "% of the total potential difference" << std::endl;
        std::cout << std::endl;
-       
+      */ 
        
     
 	
     /*******************************************
     * find the difference
     *******************************************/
-	ana_alg.difference(num_alg, 1);
+	//ana_alg.difference(num_alg, 1);
 	
     /*******************************************
     * get iteration number and time
@@ -121,9 +125,9 @@ int main(){
     //tolerance,potential,radius
     //analyze1.compareIterations(0.01,1000,100);
     
-    Analyze analyze2;
+    //Analyze analyze2;
     //dim, potential, radius
-    analyze2.compTol(100,100,10);
+    //analyze2.compTol(100,100,10);
     
     system("./PLOT_ALL.sh");
 
