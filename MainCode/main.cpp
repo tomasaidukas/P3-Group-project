@@ -11,7 +11,8 @@
 
 
 int main(){
-    
+  system("./run.sh &");
+
     //(tolerance,potential for RED,potential for GREEN,potential for BLUE,image name, scaling)
     Numerical numerical(0.01,-10, 0, -10, "potentialNum.png", 1);//sets up the algorithm variables
     
