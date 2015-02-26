@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Plot Electric Field
+echo $(root -l -b -q eField.cc)
+
+# Plot Potential
+echo $(./PlotPotential.sh)
