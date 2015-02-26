@@ -69,8 +69,8 @@ void Analytic::setBoundary()
     //insert a circle in the middle
     for (int i = 0 ; i<_dimx ; i++){
 	for (int j = 0 ; j<_dimy ; j++){
-	    r = sqrt(pow(i-_dimx/2,2) + pow(j-_dimy/2,2));
-		if (pow(r,2)<=pow(_radius,2)){
+	    r = pow(i-(_dimx-1)/2,2) + pow(j-(_dimy-1)/2,2);
+		if (r<=pow(_radius,2)){
 		    _PMesh.setisBoundary(true,i,j);
   		    _SMesh.setisBoundary(true,i,j);
   		   }
