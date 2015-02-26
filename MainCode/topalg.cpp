@@ -30,8 +30,8 @@ void TopAlg::runAlgorithm(){
 		    _PMesh.getV(i,j+1) + 
 		    _PMesh.getV(i,j-1))/4;
 		    _SMesh.setV(tempvalue,i,j);		    
-		setEdges(i,j);
 	    }
+	    setEdges(i,j);
 	}
     }
     _iter++;
@@ -52,8 +52,8 @@ void TopAlg::runAlgorithm(){
 		    _SMesh.getV(i,j-1)));
 	    
 	    _SMesh.setV(tempvalue,i,j);
-	    setEdges(i,j);
 	    }
+	    setEdges(i,j);
 	}
     }
     
@@ -421,86 +421,3 @@ void TopAlg::setEdges(int i,int j)
 	_SMesh.setV(tempvalue,_dimx-1,_dimy-1);
     }
 }
-
-
-
-
-/*************************************************
- * Calculates the electric field and put the
- * electric field values into a data file
- * Arguments are needed to produce different
- * text files.
- * 
- * First argument: 
- * i = 2 => numerical with circle inside
- * i = 3 => numerical from an image
- * 
- * Second argument:
- * spacing between mesh points put to a file
- * 
- * Format of the output is:
- * X Y Edx Edy |E|
- * X,Y are the point coordinates
- * Edx ad Edy are the field vector lengths in 
- * X and Y directions
- * |E| is the magnitude of the electric field
- *************************************************/
-/*******************
- * Was used for gnuplot
- ********************
-void TopAlg::runElectric(int i, int spacing){
-    
-    double temp;
-    Mesh _EdxMesh(_dimx,_dimy);
-    Mesh _EdyMesh(_dimx,_dimy);
-    Mesh _EMesh(_dimx,_dimy);
-    
-    Mesh _EDXMesh(_dimx,_dimy);
-    Mesh _EDYMesh(_dimx,_dimy);
-    
-    for (int X = 0 ; X<_dimx-1 ; X++){
-	for (int Y = 0 ; Y<_dimy-1 ; Y++){
-	    // Components of the electric field
-	    temp = _PMesh.getV(X+1,Y) - _PMesh.getV(X,Y);
-	    _EdxMesh.setV(temp,X,Y);
-	    temp = _PMesh.getV(X,Y+1) - _PMesh.getV(X,Y); 
-	    _EdyMesh.setV(temp,X,Y);
-	    
-	    //changes the field placement in the mesh
-	    temp = 0.5*(_EdxMesh.getV(X,Y+1) + _EdxMesh.getV(X,Y));
-	    _EDXMesh.setV(temp,X,Y);
-	    temp = 0.5*(_EdyMesh.getV(X+1,Y) + _EdyMesh.getV(X,Y));
-	    _EDYMesh.setV(temp,X,Y);
-	    
-	    // Magnitude of E	
-	    temp = sqrt(pow(_EdxMesh.getV(X,Y),2) + pow(_EdyMesh.getV(X,Y),2));
-	    _EMesh.setV(temp,X,Y);
-	}
-    }
-    
-    
-    
-    std::ofstream file;
-    if ( i == 2){
-	file.open("ElectricField/EnumCircle.txt");
-    }else if ( i == 3){
-	file.open("ElectricField/Enumerical.txt");
-    }
-    
-    
-    //put data into a text file
-    //it will have (X,Y,Edx,Edy,|E|) format
-    if (spacing != 0){
-	for (int X = 1 ; X<_dimx-1 ; X=X+spacing){
-	    for (int Y = 1 ; Y<_dimy-1 ; Y=Y+spacing){
-		file << X << " " << Y << " " << 5*_EDXMesh.getV(X,Y)<< " " << 5*_EDYMesh.getV(X,Y) << " " << _EMesh.getV(X,Y) << std::endl;
-	    }
-	}
-    }else{
-	for (int X = 1 ; X<_dimx-1 ; X++){
-	    for (int Y = 1 ; Y<_dimy-1 ; Y++){
-		file << X << " " << Y << " " << 5*_EDXMesh.getV(X,Y)<< " " << 5*_EDYMesh.getV(X,Y) << " " << _EMesh.getV(X,Y) << std::endl;
-	    }
-	}
-    }
-}*/

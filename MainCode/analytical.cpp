@@ -69,7 +69,7 @@ void Analytic::setBoundary()
     //insert a circle in the middle
     for (int i = 0 ; i<_dimx ; i++){
 	for (int j = 0 ; j<_dimy ; j++){
-	    r = pow(i-(_dimx-1)/2,2) + pow(j-(_dimy-1)/2,2);
+	    r = pow(i-_dimx/2,2) + pow(j-_dimy/2,2);
 		if (r<=pow(_radius,2)){
 		    _PMesh.setisBoundary(true,i,j);
   		    _SMesh.setisBoundary(true,i,j);
@@ -98,15 +98,14 @@ void Analytic::runAnalytical()
     for (int i=0; i<_dimx; i++){
 	for (int j=0; j<_dimy; j++){
 	    r = (pow(i-_dimx/2,2) + pow(j-_dimy/2,2));
-	    if (r>pow(_radius,2)){
- 		costheta = (i-_dimx/2)/pow(r,2);	
- 		/*
- 		tempval = (-_E0 * ( r - (pow(_radius,2)/pow(r,2))) * costheta);
- 		*/
- 		tempval = _E0*pow(r,2)*(pow(_dimx,2)/(pow(_radius,2) - pow(_dimx,2))) * (1-pow(_radius,2)/pow(r,3)) * costheta;
+	    //if (r>pow(_radius,2)){
+	    if (!_PMesh.getisBoundary(i,j)){
+ 		costheta = (i-_dimx/2)/sqrt(r);	
+ 		
+ 		tempval = _E0*sqrt(r)*(pow(_dimx,2)/(pow(_radius,2) - pow(_dimx,2))) * (1-pow(_radius,2)/r) * costheta;
+		
 		 _PMesh.setV(tempval, i, j);
 	    }
-	    _iter++;
 	}	 
     }
     
