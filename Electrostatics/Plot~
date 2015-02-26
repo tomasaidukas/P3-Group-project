@@ -1,0 +1,15 @@
+#!/bin/bash
+
+################################
+# Setup root environment
+export ROOTSYS=$HOME/root
+export PATH=$PATH:$ROOTSYS/bin
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$ROOTSYS/lib
+
+# Plot Electric Field
+echo $(root -l -b -q eField.cc)
+
+
+################################
+# Plot Potential
+echo $(./PlotPotential.sh)

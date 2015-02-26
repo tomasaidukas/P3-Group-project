@@ -1,0 +1,29 @@
+//default header files
+#include<iostream>
+
+//user-defined header files
+#include "numerical.h"
+#include "mesh.h"
+#include "topalg.h"
+#include "CImg.h"
+
+
+int main(){
+
+    //(tolerance,potential for RED,potential for GREEN,potential for BLUE,image name)
+    Numerical numerical(0.0001,-100, 100, -100, "potentialNum.png");//sets up the algorithm variables
+
+    // printPotential()/runElectric() arguments:
+    // 1 => analytical plot
+    // 2 => numerical with circle inside plot
+    // 3 => numerical from an image plot  
+
+    //find the numerical solution
+    numerical.runAlgorithm();
+    numerical.printPotential(3);
+    numerical.runElectric(3);
+
+	std::cout << numerical.getIter() << std::endl;
+
+	return 0;
+}
