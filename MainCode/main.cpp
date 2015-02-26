@@ -121,9 +121,9 @@ int main(){
     //tolerance,potential,radius
     //analyze1.compareIterations(0.01,1000,100);
     
-    //Analyze analyze2;
+    Analyze analyze2;
     //dim, potential, radius
-    //analyze2.compTol(100,100,10);
+    analyze2.compTol(100,100,10);
     
     system("./PLOT_ALL.sh");
 

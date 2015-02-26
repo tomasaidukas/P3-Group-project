@@ -63,21 +63,21 @@ void Analyze::compTol(double dim, double potential, double radius){
     datatol.open("Analyze/VcompTolerance.txt");
     dataerr.open("Analyze/VcompError.txt");
     timedata.open("Analyze/VcompTolTime.txt");
-    for (int i=10; i<10011 ; i=i+90){
+    for (int i=10; i<10001 ; i=i*10){
 	
-	Analytic anal(dim,dim,radius,potential,0.01);
-	Analytic num(dim,dim,radius,potential,0.01);
+	Analytic anal(dim,dim,radius,potential,0.000001*i);
+	Analytic num(dim,dim,radius,potential,0.000001*i);
 	num.runAlgorithm();
 	anal.runAnalytical();
 	
 	err = num.difference(anal,0);
 	
 	//tolerance and iteration number
-	datatol << 0.01 << " " << num.getIter() << std::endl;
+	datatol << 0.000001*i << " " << num.getIter() << std::endl;
 	//tolerance and maximum error
-	dataerr << 0.01 << " " << err << std::endl;
+	dataerr << 0.000001*i << " " << err << std::endl;
 
-	timedata << 0.01 << " " << num.getTime() << std::endl;
+	timedata << 0.000001*i << " " << num.getTime() << std::endl;
     }
 }  
 

@@ -97,9 +97,9 @@ void Analytic::runAnalytical()
     
     for (int i=0; i<_dimx; i++){
 	for (int j=0; j<_dimy; j++){
-	    r = (pow(i-_dimx/2,2) + pow(j-_dimy/2,2));
-	    //if (r>pow(_radius,2)){
 	    if (!_PMesh.getisBoundary(i,j)){
+		r = (pow(i-_dimx/2,2) + pow(j-_dimy/2,2));
+		//if (r>pow(_radius,2)){
  		costheta = (i-_dimx/2)/sqrt(r);	
  		
  		tempval = _E0*sqrt(r)*(pow(_dimx,2)/(pow(_radius,2) - pow(_dimx,2))) * (1-pow(_radius,2)/r) * costheta;
