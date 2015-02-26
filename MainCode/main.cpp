@@ -16,8 +16,8 @@ int main(){
     Numerical numerical(0.01,-10, 0, -10, "potentialNum.png", 1);//sets up the algorithm variables
     
     //(dimx,dimy,circle radius,potential of plates,tolerance)
-    Analytic ana_alg(100,100,1,100,0.0000000001);//sets up the analytical variables
-    Analytic num_alg(100,100,1,100,0.0000000001);//sets up the numerical values for an analytical solution
+    Analytic ana_alg(100,100,25,1000,0.0000000001);//sets up the analytical variables
+    Analytic num_alg(100,100,25,1000,0.0000000001);//sets up the numerical values for an analytical solution
     
     
     
@@ -58,7 +58,6 @@ int main(){
 	ana_alg.runAnalytical();
 	ana_alg.printGNUPLOT(1);
 	ana_alg.printROOT(1,5);
-	std::cout << "Iteration number for the analytical solution is: " << ana_alg.getIter() << std::endl;
 	std::cout << "Algorithm ran for " << ana_alg.getTime() << " second(s)" << std::endl;
 
     /*******************************************
