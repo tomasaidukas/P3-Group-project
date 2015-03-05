@@ -46,7 +46,7 @@ QPixmap plotPix(const char *plot)
 // When 'run' button is clicked, run the algorithm
 void MainWindow::on_pushButtonRun_clicked()
 {
-        system("./run.sh &");
+  //   system("./run.sh &");
 
     // Disable button while process is running
         ui->pushButtonRun->setEnabled(false);
