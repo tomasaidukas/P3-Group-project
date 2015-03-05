@@ -62,7 +62,7 @@ void Numerical::setBoundary()
 		for (int q=_scale*y; q<_scale*y+_scale; q++){
 		  _PMesh.setV(_maxV1,p,q);
 		  _PMesh.setisBoundary(true,p,q);
-		  _SMesh.setV(_maxV1,p,y);
+		  _SMesh.setV(_maxV1,p,q);
 		  _SMesh.setisBoundary(true,p,q);
 		}
 	      }
