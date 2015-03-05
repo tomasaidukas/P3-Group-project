@@ -13,6 +13,7 @@ Then use these commands:
 >qmake
 
 delete 'eField.cc' from SOURCES in 'Makefile'
+
 delete 'eField.o' from OBJECTS in 'Makefile'
 
 Then use these commands:
